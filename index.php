@@ -12,7 +12,9 @@
 </head>
 <body>
     <div class="container">
-
+<?php
+    echo "Hello, World!";
+?>
     </div>
 </body>
 </html>
