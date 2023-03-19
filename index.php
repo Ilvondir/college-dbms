@@ -1,5 +1,9 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl-PL">
 
 <head>
     <title>College Database Management System</title>
@@ -16,7 +20,7 @@
     <link rel="shortcut icon" href="img/icon.ico">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/libs/bootstrap.min.css">
 </head>
 
 <body>
@@ -32,22 +36,30 @@
             <h1><a href="index.php" class="logo">College DBMS</a></h1>
             <ul class="list-unstyled components mb-5">
                 <li class="active">
-                    <a href="#"><span class="fa fa-home mr-3"></span> Homepage</a>
+                    <a href="index.php"><span class="fa fa-home mr-3"></span> Strona główna</a>
                 </li>
                 <li>
-                    <a href="#"><span class="fa fa-user mr-3"></span> Dashboard</a>
+                    <a href="searching.php"><span class="fa fa-filter mr-3"></span> Wyszukiwanie</a>
+                </li>
+                <?php
+                    if ($_SESSION["logged"]) echo '<li>
+                    <a href="import.php"><span class="fa fa-plus mr-3"></span> Import</a>
+                    </li>';
+                ?>
+                <li>
+                    <a href="export.php"><span class="fa fa-book mr-3"></span> Eksport</a>
                 </li>
                 <li>
-                    <a href="#"><span class="fa fa-sticky-note mr-3"></span> Friends</a>
-                </li>
-                <li>
-                    <a href="#"><span class="fa fa-sticky-note mr-3"></span> Subcription</a>
-                </li>
-                <li>
-                    <a href="#"><span class="fa fa-paper-plane mr-3"></span> Settings</a>
-                </li>
-                <li>
-                    <a href="#"><span class="fa fa-paper-plane mr-3"></span> Information</a>
+                    <?php
+                        if ($_SESSION["logged"]) echo '<a href="logout.php">';
+                        else echo '<a href="login.php">';
+
+                        echo '<span class="fa fa-address-book mr-3"></span>';
+
+                        if ($_SESSION["logged"]) echo " Wyloguj się";
+                        else echo " Logowanie";
+                        echo "</a>";
+                    ?>
                 </li>
             </ul>
 
@@ -55,9 +67,7 @@
 
 
         <div id="content" class="p-4 p-md-5 pt-5">
-            <?php 
-                echo "Hello!";
-            ?>
+            
         </div>
     </div>
 
