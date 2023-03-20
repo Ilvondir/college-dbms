@@ -83,6 +83,23 @@
                 <input type="password" id="password" name="password" class="form-control" required><br>
                 <div class="text-center">
                     <input type="submit" value="Zaloguj się" class="btn btn-primary">
+
+                    <?php
+
+                        if ($_SERVER["REQUEST_METHOD"]=="POST") {
+                            $login = $_POST["login"];
+                            $password = $_POST["password"];
+
+                            if ($login=="admin" && $password=="admin") {
+                                $_SESSION["logged"] = true;
+                                echo "<br>Pomyślnie zalogowano na konto administratora.";
+                                header("Location: index.php");
+                            } else {
+                                echo "<br>Próba zalogowania nie powiodła się.";
+                            }
+                        }
+
+                    ?>
                 </div>
             </form>
         </div>
