@@ -13,14 +13,16 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 
     <script src="js/libs/jquery.min.js" defer></script>
-    <script src="js/libs/popper.js" defer></script>
-    <script src="js/libs/bootstrap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" defer></script>
+    
     <script src="js/navbar.js" defer></script>
 
     <link rel="shortcut icon" href="img/icon.ico">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/libs/bootstrap.min.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    
 </head>
 
 <body>
@@ -42,11 +44,11 @@
                     <a href="searching.php"><span class="fa fa-filter mr-3"></span> Wyszukiwanie</a>
                 </li>
                 <?php
-                if (isset($_SESSION["logged"])) {
-                    if ($_SESSION["logged"]) echo '<li>
-                    <a href="import.php"><span class="fa fa-plus mr-3"></span> Import</a>
-                    </li>';
-                }
+                    if (isset($_SESSION["logged"])) {
+                        if ($_SESSION["logged"]) echo '<li>
+                        <a href="import.php"><span class="fa fa-plus mr-3"></span> Import</a>
+                        </li>';
+                    }
                 ?>
                 <li>
                     <a href="export.php"><span class="fa fa-book mr-3"></span> Eksport</a>
@@ -73,8 +75,16 @@
         </nav>
 
 
-        <div id="content" class="p-4 p-md-5 pt-5">
-            
+        <div id="content" class="p-4 p-md-5 pt-5 d-flex justify-content-center align-items-center">
+            <form class="form" action="#" method="POST">
+                <label class="label" for="login">Podaj login:</label><br>
+                <input type="text" id="login" name="login" class="form-control" required><br>
+                <label class="label" for="password">Podaj hasło:</label><br>
+                <input type="password" id="password" name="password" class="form-control" required><br>
+                <div class="text-center">
+                    <input type="submit" value="Zaloguj się" class="btn btn-primary">
+                </div>
+            </form>
         </div>
     </div>
 
