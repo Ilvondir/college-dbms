@@ -35,23 +35,23 @@
             </div>
             <h1><a href="index.php" class="logo">College DBMS</a></h1>
             <ul class="list-unstyled components mb-5">
-                <li class="active">
+                <li>
                     <a href="index.php"><span class="fa fa-home mr-3"></span> Strona główna</a>
                 </li>
                 <li>
                     <a href="searching.php"><span class="fa fa-filter mr-3"></span> Wyszukiwanie</a>
                 </li>
                 <?php
-                    if (isset($_SESSION["logged"])) {
-                        if ($_SESSION["logged"]) echo '<li>
-                        <a href="import.php"><span class="fa fa-plus mr-3"></span> Import</a>
-                        </li>';
-                    }
+                if (isset($_SESSION["logged"])) {
+                    if ($_SESSION["logged"]) echo '<li>
+                    <a href="import.php"><span class="fa fa-plus mr-3"></span> Import</a>
+                    </li>';
+                }
                 ?>
                 <li>
                     <a href="export.php"><span class="fa fa-book mr-3"></span> Eksport</a>
                 </li>
-                <li>
+                <li class="active">
                     <?php
                         if (isset($_SESSION["logged"])) {
                             if ($_SESSION["logged"]) echo '<a href="logout.php">';
