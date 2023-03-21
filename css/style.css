@@ -1,0 +1,20 @@
+a {
+    font-family: "Poppins";
+}
+
+.containerToTable {
+    overflow-y: scroll;
+    max-height: 84vh;
+}
+
+tr {
+    cursor: pointer;
+}
+
+tr:nth-child(1) {
+    cursor: default;
+}
+
+th {
+    background-color: #DDD;
+}
