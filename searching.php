@@ -10,7 +10,7 @@ try {
     $connect = new PDO("mysql:host=$server;dbname=$database", $user, $password);
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "select * from studenci";
+    $sql = "call searching()";
 
     $result = $connect->prepare($sql);
     $result->execute();
@@ -55,10 +55,10 @@ try {
             </div>
             <h1><a href="index.php" class="logo">College DBMS</a></h1>
             <ul class="list-unstyled components mb-5">
-                <li class="active">
+                <li>
                     <a href="index.php"><span class="fa fa-home mr-3"></span> Strona główna</a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="searching.php"><span class="fa fa-filter mr-3"></span> Wyszukiwanie</a>
                 </li>
                 <?php
@@ -95,24 +95,46 @@ try {
 
         <div id="content" class="p-4 p-md-5 pt-5">
             <div class="containerToTable">
-                <table class="table table-striped">
+
+                <h2>Wyszukaj</h2>
+
+                <div class="d-flex justify-content-center">
+                    <form action="#" method="GET" class="form w-50">
+                        <label for="type" class="label">Wybierz kryterium:</label>
+                        <select name="type" class="form-control" id="type">
+                            <option>Imię</option>
+                            <option selected>Nazwisko</option>
+                            <option>Temat pracy magisterskiej</option>
+                        </select>
+                        <label for="phrase" class="label">Wpisz poszukiwaną frazę:</label>
+                        <input type="text" id="phrase" name="phrase" class="form-control" required>
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-primary mt-3" value="Szukaj">
+                        </div>
+                    </form>
+                </div>
+
+
+                <table class="table mt-5 table-striped">
                     <tr>
                         <th>ID</th>
                         <th>Nazwisko</th>
                         <th>Imię</th>
                         <th>Numer albumu</th>
                         <th>Kierunek studiów</th>
+                        <th>Praca magisterska</th>
                     </tr>
                     <?php while ($rows = $result->fetch()) { ?>
-                            <tr onclick="window.location = 'student.php?album=<?php echo $rows["NrAlbumu"]?>'">
-                                <a href="student.php?album=<?php echo $rows["NrAlbumu"]?>">
+                        <tr onclick="window.location = 'student.php?album=<?php echo $rows["NrAlbumu"] ?>'">
+                            <a href="student.php?album=<?php echo $rows["NrAlbumu"] ?>">
                                 <td><?php echo $rows["IDStudenta"] ?></td>
                                 <td><?php echo $rows["Nazwisko"] ?></td>
                                 <td><?php echo $rows["Imie"] ?></td>
                                 <td><?php echo $rows["NrAlbumu"] ?></td>
                                 <td><?php echo $rows["KierunekStudiow"] ?></td>
-                    </a>
-                            </tr>
+                                <td><?php echo $rows["NazwaProjektu"] ?></td>
+                            </a>
+                        </tr>
                     <?php } ?>
                 </table>
             </div>

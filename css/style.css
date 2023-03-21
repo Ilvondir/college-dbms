@@ -7,6 +7,11 @@ a {
     max-height: 84vh;
 }
 
+.containerToTable::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+}
+
 tr {
     cursor: pointer;
 }
