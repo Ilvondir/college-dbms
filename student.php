@@ -1,8 +1,25 @@
 <?php
 session_start();
 
-if (isset($_SESSION["logged"])) {
-    if ($_SESSION["logged"]) header("Location: index.php");
+if (!isset($_GET["album"])) {
+    header("Location: index.php");
+} else {
+    $server = "localhost";
+    $user = "root";
+    $password = "";
+    $database = "college";
+
+    try {
+        $connect = new PDO("mysql:host=$server;dbname=$database", $user, $password);
+        $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $sql = "call showing(?)";
+
+        $result = $connect->prepare($sql);
+        $result->execute([$_GET["album"]]);
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
 }
 ?>
 
@@ -57,7 +74,7 @@ if (isset($_SESSION["logged"])) {
                 <li>
                     <a href="export.php"><span class="fa fa-book mr-3"></span> Eksport</a>
                 </li>
-                <li class="active">
+                <li>
                     <?php
                     if (isset($_SESSION["logged"])) {
                         if ($_SESSION["logged"]) echo '<a href="logout.php">';
@@ -79,33 +96,48 @@ if (isset($_SESSION["logged"])) {
         </nav>
 
 
-        <div id="content" class="p-4 p-md-5 pt-5 d-flex justify-content-center align-items-center">
-            <form class="form" action="#" method="POST">
-                <label class="label" for="login">Podaj login:</label><br>
-                <input type="text" id="login" name="login" class="form-control" required><br>
-                <label class="label" for="password">Podaj hasło:</label><br>
-                <input type="password" id="password" name="password" class="form-control" required><br>
-                <div class="text-center">
-                    <input type="submit" value="Zaloguj się" class="btn btn-primary">
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="containerToTable">
+                <?php $row = $result->fetch() ?>
 
-                    <?php
+                <h1><?php echo $row["Imie"]. " ". $row["Nazwisko"] ?></h1>
 
-                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                        $login = $_POST["login"];
-                        $password = $_POST["password"];
+                <p>Numer albumu: <b><?php echo $row["NrAlbumu"] ?></b></p>
 
-                        if ($login == "admin" && $password == "admin") {
-                            $_SESSION["logged"] = true;
-                            echo "<br>Pomyślnie zalogowano na konto administratora.";
-                            header("Location: index.php");
-                        } else {
-                            echo "<br>Próba zalogowania nie powiodła się.";
-                        }
-                    }
+                <p>Kierunek studiów: <b><?php echo $row["KierunekStudiow"] ?></b></p>
 
-                    ?>
-                </div>
-            </form>
+                <p class="mb-4"><b>Średnia za cały okres studiów: <?php echo $row["SredniaOcen"] ?></b></p>
+
+                <h4>Praca magisterska</h4>
+                <table class="table ">
+                    <tr>
+                        <th><?php echo $row["NazwaProjektu"] ?></th>
+                        <th><?php echo $row["Ocena"] ?></th>
+                    </tr>
+                </table>
+
+                <h4>Przedmioty realizowane w sposób szczególny w czasie studiów</h4>
+                <table class="table">
+                    <tr>
+                        <td><?php echo $row["Nazwa"] ?></td>
+                    </tr>
+                        <?php while ($rows = $result->fetch()) { ?>
+                        <tr>
+                            <td> <?php echo $rows["Nazwa"] ?></td>
+                        <tr>
+                        <?php } ?>
+                </table>
+
+                <?php if (isset($_SESSION["logged"])) {
+                    if ($_SESSION["logged"]) { ?>
+                        <div class="text-right">
+                            <a href="editing.php?<?php echo $_GET["album"] ?>">
+                                <button class="btn btn-primary">Edytuj</button>
+                            </a>
+                        </div>
+                <?php } } ?>
+                
+            </div>
         </div>
     </div>
 

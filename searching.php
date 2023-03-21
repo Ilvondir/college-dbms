@@ -10,10 +10,23 @@ try {
     $connect = new PDO("mysql:host=$server;dbname=$database", $user, $password);
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "call searching()";
+    $sql = "call searching(?, ?)";
+
+    if (isset($_GET["phrase"]) && isset($_GET["type"])) {
+        if ($_GET["phrase"] == "") {
+            $phrase = "";
+            $condition = "Nazwisko";
+        } else {
+            $phrase = $_GET["phrase"];
+            $condition = $_GET["type"];
+        }
+    } else {
+        $phrase = "";
+        $condition = "Nazwisko";
+    }
 
     $result = $connect->prepare($sql);
-    $result->execute();
+    $result->execute([$condition, $phrase]);
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
@@ -64,7 +77,7 @@ try {
                 <?php
                 if (isset($_SESSION["logged"])) {
                     if ($_SESSION["logged"]) echo '<li>
-                        <a href="import.php"><span class="fa fa-plus mr-3"></span> Import</a>
+                        <a href="inserting.php"><span class="fa fa-plus mr-3"></span> Wstawianie</a>
                         </li>';
                 }
                 ?>
@@ -107,7 +120,7 @@ try {
                             <option>Temat pracy magisterskiej</option>
                         </select>
                         <label for="phrase" class="label">Wpisz poszukiwaną frazę:</label>
-                        <input type="text" id="phrase" name="phrase" class="form-control" required>
+                        <input type="text" id="phrase" name="phrase" class="form-control">
                         <div class="text-center">
                             <input type="submit" class="btn btn-primary mt-3" value="Szukaj">
                         </div>
