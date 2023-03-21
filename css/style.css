@@ -1,0 +1,25 @@
+a {
+    font-family: "Poppins";
+}
+
+.containerToTable {
+    overflow-y: scroll;
+    max-height: 84vh;
+}
+
+.containerToTable::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+}
+
+tr {
+    cursor: pointer;
+}
+
+tr:nth-child(1) {
+    cursor: default;
+}
+
+th {
+    background-color: #DDD;
+}
