@@ -1,5 +1,5 @@
 <?php
-    session_start();
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -11,10 +11,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-    
+
     <script src="js/libs/jquery.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" defer></script>
-    
+
     <script src="js/navbar.js" defer></script>
 
     <link rel="shortcut icon" href="img/icon.ico">
@@ -44,30 +44,30 @@
                     <a href="searching.php"><span class="fa fa-filter mr-3"></span> Wyszukiwanie</a>
                 </li>
                 <?php
-                    if (isset($_SESSION["logged"])) {
-                        if ($_SESSION["logged"]) echo '<li>
+                if (isset($_SESSION["logged"])) {
+                    if ($_SESSION["logged"]) echo '<li>
                         <a href="inserting.php"><span class="fa fa-plus mr-3"></span> Wstawianie</a>
                         </li>';
-                    }
+                }
                 ?>
                 <li>
                     <a href="export.php"><span class="fa fa-book mr-3"></span> Eksport</a>
                 </li>
                 <li>
                     <?php
-                        if (isset($_SESSION["logged"])) {
-                            if ($_SESSION["logged"]) echo '<a href="logout.php">';
-                            else echo '<a href="login.php">';
-                        } else echo '<a href="login.php">';
+                    if (isset($_SESSION["logged"])) {
+                        if ($_SESSION["logged"]) echo '<a href="logout.php">';
+                        else echo '<a href="login.php">';
+                    } else echo '<a href="login.php">';
 
-                        echo '<span class="fa fa-address-book mr-3"></span>';
+                    echo '<span class="fa fa-address-book mr-3"></span>';
 
-                        if (isset($_SESSION["logged"])) {
-                            if ($_SESSION["logged"]) echo " Wyloguj się";
-                            else echo " Logowanie";
-                        } else echo " Logowanie";
+                    if (isset($_SESSION["logged"])) {
+                        if ($_SESSION["logged"]) echo " Wyloguj się";
+                        else echo " Logowanie";
+                    } else echo " Logowanie";
 
-                        echo "</a>";
+                    echo "</a>";
                     ?>
                 </li>
             </ul>
@@ -77,11 +77,11 @@
 
         <div id="content" class="p-4 p-md-5 pt-5">
             <?php
-                if (isset($_SESSION["logged"])) {
-                    if ($_SESSION["logged"]) echo "<h1 class='h1'>Witaj, Administratorze!</h1>";
-                }
+            if (isset($_SESSION["logged"])) {
+                if ($_SESSION["logged"]) echo "<h1 class='h1'>Witaj, Administratorze!</h1>";
+            }
             ?>
-            
+
         </div>
     </div>
 

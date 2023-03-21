@@ -1,9 +1,9 @@
 <?php
-    session_start();
+session_start();
 
-    if (isset($_SESSION["logged"])) {
-        if ($_SESSION["logged"]) header("Location: index.php");
-    }
+if (isset($_SESSION["logged"])) {
+    if ($_SESSION["logged"]) header("Location: index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +18,7 @@
 
     <script src="js/libs/jquery.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" defer></script>
-    
+
     <script src="js/navbar.js" defer></script>
 
     <link rel="shortcut icon" href="img/icon.ico">
@@ -48,30 +48,30 @@
                     <a href="searching.php"><span class="fa fa-filter mr-3"></span> Wyszukiwanie</a>
                 </li>
                 <?php
-                    if (isset($_SESSION["logged"])) {
-                        if ($_SESSION["logged"]) echo '<li>
+                if (isset($_SESSION["logged"])) {
+                    if ($_SESSION["logged"]) echo '<li>
                         <a href="inserting.php"><span class="fa fa-plus mr-3"></span> Wstawianie</a>
                         </li>';
-                    }
+                }
                 ?>
                 <li>
                     <a href="export.php"><span class="fa fa-book mr-3"></span> Eksport</a>
                 </li>
                 <li class="active">
                     <?php
-                        if (isset($_SESSION["logged"])) {
-                            if ($_SESSION["logged"]) echo '<a href="logout.php">';
-                            else echo '<a href="login.php">';
-                        } else echo '<a href="login.php">';
+                    if (isset($_SESSION["logged"])) {
+                        if ($_SESSION["logged"]) echo '<a href="logout.php">';
+                        else echo '<a href="login.php">';
+                    } else echo '<a href="login.php">';
 
-                        echo '<span class="fa fa-address-book mr-3"></span>';
+                    echo '<span class="fa fa-address-book mr-3"></span>';
 
-                        if (isset($_SESSION["logged"])) {
-                            if ($_SESSION["logged"]) echo " Wyloguj się";
-                            else echo " Logowanie";
-                        } else echo " Logowanie";
+                    if (isset($_SESSION["logged"])) {
+                        if ($_SESSION["logged"]) echo " Wyloguj się";
+                        else echo " Logowanie";
+                    } else echo " Logowanie";
 
-                        echo "</a>";
+                    echo "</a>";
                     ?>
                 </li>
             </ul>
@@ -90,18 +90,18 @@
 
                     <?php
 
-                        if ($_SERVER["REQUEST_METHOD"]=="POST") {
-                            $login = $_POST["login"];
-                            $password = $_POST["password"];
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                        $login = $_POST["login"];
+                        $password = $_POST["password"];
 
-                            if ($login=="admin" && $password=="admin") {
-                                $_SESSION["logged"] = true;
-                                echo "<br>Pomyślnie zalogowano na konto administratora.";
-                                header("Location: index.php");
-                            } else {
-                                echo "<br>Próba zalogowania nie powiodła się.";
-                            }
+                        if ($login == "admin" && $password == "admin") {
+                            $_SESSION["logged"] = true;
+                            echo "<br>Pomyślnie zalogowano na konto administratora.";
+                            header("Location: index.php");
+                        } else {
+                            echo "<br>Próba zalogowania nie powiodła się.";
                         }
+                    }
 
                     ?>
                 </div>

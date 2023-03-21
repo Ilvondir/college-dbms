@@ -13,7 +13,7 @@ try {
     $sql = "call searching(?, ?)";
 
     if (isset($_GET["phrase"]) && isset($_GET["type"])) {
-        if ($_GET["phrase"]=="") {
+        if ($_GET["phrase"] == "") {
             $phrase = "";
             $condition = "Nazwisko";
         } else {

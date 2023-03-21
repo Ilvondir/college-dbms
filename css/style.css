@@ -4,7 +4,7 @@ a {
 
 .containerToTable {
     overflow-y: scroll;
-    max-height: 84vh;
+    max-height: 84.5vh;
 }
 
 .containerToTable::-webkit-scrollbar {
@@ -12,7 +12,7 @@ a {
 	height: 0;
 }
 
-tr {
+.table-striped tr {
     cursor: pointer;
 }
 
