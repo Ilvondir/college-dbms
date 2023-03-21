@@ -75,6 +75,11 @@
 
 
         <div id="content" class="p-4 p-md-5 pt-5">
+            <?php
+                if (isset($_SESSION["logged"])) {
+                    if ($_SESSION["logged"]) echo "<h1 class='h1'>Witaj, Administratorze!</h1>";
+                }
+            ?>
             
         </div>
     </div>
