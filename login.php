@@ -50,7 +50,7 @@
                 <?php
                     if (isset($_SESSION["logged"])) {
                         if ($_SESSION["logged"]) echo '<li>
-                        <a href="import.php"><span class="fa fa-plus mr-3"></span> Import</a>
+                        <a href="inserting.php"><span class="fa fa-plus mr-3"></span> Wstawianie</a>
                         </li>';
                     }
                 ?>
