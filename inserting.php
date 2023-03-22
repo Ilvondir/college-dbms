@@ -11,24 +11,24 @@ if (isset($_SESSION["logged"])) {
 
 $success = false;
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    if (isset($_GET["name"])) {
-        $name = $_GET["name"];
-        $surname = $_GET["surname"];
-        $album = $_GET["albumNumber"];
-        $way = $_GET["way"];
-        $mean = $_GET["mean"];
-        $work = $_GET["work"];
-        $mark = $_GET["mark"];
+try {
+    $server = "localhost";
+    $user = "root";
+    $password = "";
+    $database = "college";
 
-        $server = "localhost";
-        $user = "root";
-        $password = "";
-        $database = "college";
+    $connect = new PDO("mysql:host=$server;dbname=$database", $user, $password);
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        try {
-            $connect = new PDO("mysql:host=$server;dbname=$database", $user, $password);
-            $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        if (isset($_GET["name"])) {
+            $name = $_GET["name"];
+            $surname = $_GET["surname"];
+            $album = $_GET["albumNumber"];
+            $way = $_GET["way"];
+            $mean = $_GET["mean"];
+            $work = $_GET["work"];
+            $mark = $_GET["mark"];
 
             $sql = "call inserting(?, ?, ?, ?, ?, ?, ?)";
 
@@ -44,10 +44,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             ]);
 
             $success = true;
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
         }
+
+        $sql2 = "call getHobbies()";
+        $result2 = $connect->prepare($sql2);
+        $result2->execute();
     }
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
 }
 
 ?>
@@ -160,15 +164,25 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                         <input type="number" name="mark" id="mark" class="form-control" min="2" max="5" step="0.5" required>
                     </div>
 
+                    <div class="float-left w-100 p-3">
+                        <label for="hobby" class="form-label">Wybierz hobby:</label><br>
+                        <select name="hobby" id="hobby" class="form-control" required>
+                            <?php
+                            while ($hobbies = $result2->fetch()) {
+                                echo "<option>" . $hobbies["Nazwa"] . "</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+
                     <div class="float-left text-right w-100">
                         <input type="reset" value="Wyczyść" class="btn btn-danger">
                         <input type="submit" value="Dodaj do bazy" class="btn btn-primary"><br>
                         <?php
-                            if ($success) echo "Dodanie studenta przebiegło pomyślnie.";
+                        if ($success) echo "Dodanie studenta przebiegło pomyślnie.";
                         ?>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

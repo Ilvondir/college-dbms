@@ -116,7 +116,7 @@ if (!isset($_GET["album"])) {
                     </tr>
                 </table>
 
-                <h4>Przedmioty realizowane w sposób szczególny w czasie studiów</h4>
+                <h4>Zainteresowania naukowe:</h4>
                 <table class="table">
                     <tr>
                         <td><?php echo $row["Nazwa"] ?></td>
