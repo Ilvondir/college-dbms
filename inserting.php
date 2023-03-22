@@ -20,15 +20,16 @@ try {
     $connect = new PDO("mysql:host=$server;dbname=$database", $user, $password);
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    if ($_SERVER["REQUEST_METHOD"] == "GET") {
-        if (isset($_GET["name"])) {
-            $name = $_GET["name"];
-            $surname = $_GET["surname"];
-            $album = $_GET["albumNumber"];
-            $way = $_GET["way"];
-            $mean = $_GET["mean"];
-            $work = $_GET["work"];
-            $mark = $_GET["mark"];
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST["name"])) {
+            $name = $_POST["name"];
+            $surname = $_POST["surname"];
+            $album = $_POST["albumNumber"];
+            $way = $_POST["way"];
+            $mean = $_POST["mean"];
+            $work = $_POST["work"];
+            $mark = $_POST["mark"];
+            $hobby = $_POST["hobby"];
 
             $sql = "call inserting(?, ?, ?, ?, ?, ?, ?)";
 
@@ -40,16 +41,23 @@ try {
                 $way,
                 $mean,
                 $work,
-                $mark
+                $mark,
             ]);
+
+            $sql3 = "call setHobby(?, ?)";
+            $result3 = $connect->prepare($sql3);
+            foreach ($hobby as $h) {
+                $result3->execute([$h, $album]);
+            }
 
             $success = true;
         }
-
-        $sql2 = "call getHobbies()";
-        $result2 = $connect->prepare($sql2);
-        $result2->execute();
     }
+
+    $sql2 = "call getHobbies()";
+    $result2 = $connect->prepare($sql2);
+    $result2->execute();
+
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
@@ -132,7 +140,7 @@ try {
         <div id="content" class="p-4 p-md-5 pt-5">
             <div class="containerToTable">
                 <h2>Dodanie studenta</h2>
-                <form action="#" method="GET">
+                <form action="#" method="POST">
 
                     <div class="float-left w-50 p-3">
                         <label for="name" class="form-label">Imię:</label><br>
@@ -166,7 +174,7 @@ try {
 
                     <div class="float-left w-100 p-3">
                         <label for="hobby" class="form-label">Wybierz hobby:</label><br>
-                        <select name="hobby" id="hobby" class="form-control" required>
+                        <select name="hobby[]" id="hobby" class="w-100 form-select" required multiple>
                             <?php
                             while ($hobbies = $result2->fetch()) {
                                 echo "<option>" . $hobbies["Nazwa"] . "</option>";
@@ -179,7 +187,7 @@ try {
                         <input type="reset" value="Wyczyść" class="btn btn-danger">
                         <input type="submit" value="Dodaj do bazy" class="btn btn-primary"><br>
                         <?php
-                        if ($success) echo "Dodanie studenta przebiegło pomyślnie.";
+                            if ($success) echo "Dodanie studenta przebiegło pomyślnie.";
                         ?>
                     </div>
                 </form>

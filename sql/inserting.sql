@@ -10,7 +10,8 @@ CREATE OR REPLACE PROCEDURE inserting(IN name varchar(30),
 BEGIN
     
     DECLARE StudentID INTEGER;
-    SET StudentID :=  (SELECT MAX(IDStudenta) FROM studenci);
+    
+    SET StudentID = (SELECT MAX(IDStudenta) FROM studenci);
     SET StudentID = StudentID+1;
 
     INSERT INTO studenci VALUES (null, name, surname, albumNumber, way, mean);

@@ -20,6 +20,20 @@ BEGIN
                 FROM studenci INNER JOIN projekty
                 ON studenci.IDStudenta=projekty.IDStudenta
                 WHERE projekty.NazwaProjektu LIKE CONCAT('%', phrase, '%');
+            ELSE 
+                IF cond="Numer albumu" THEN
+                    SELECT studenci.IDStudenta, Imie, Nazwisko, NrAlbumu, KierunekStudiow, projekty.NazwaProjektu
+                    FROM studenci INNER JOIN projekty
+                    ON studenci.IDStudenta=projekty.IDStudenta
+                    WHERE studenci.NrAlbumu LIKE CONCAT('%', phrase, '%');
+                ELSE 
+                    IF cond="Kierunek studiów" THEN
+                        SELECT studenci.IDStudenta, Imie, Nazwisko, NrAlbumu, KierunekStudiow, projekty.NazwaProjektu
+                        FROM studenci INNER JOIN projekty
+                        ON studenci.IDStudenta=projekty.IDStudenta
+                        WHERE studenci.KierunekStudiow LIKE CONCAT('%', phrase, '%');
+                    END IF;
+                END IF;
             END IF;
         END IF;
     END IF;
