@@ -1,6 +1,14 @@
 <?php
 session_start();
 
+if (!isset($_SESSION["logged"])) {
+    header("Location: index.php");
+}
+
+if (isset($_SESSION["logged"])) {
+    if (!$_SESSION["logged"]) header("Location: index.php");
+}
+
 if (!isset($_GET["album"])) {
     header("Location: index.php");
 } else {
@@ -98,45 +106,45 @@ if (!isset($_GET["album"])) {
 
         <div id="content" class="p-4 p-md-5 pt-5">
             <div class="containerToTable">
-                <?php $row = $result->fetch() ?>
+                <form action="#" method="POST">
 
-                <h1><?php echo $row["Imie"]. " ". $row["Nazwisko"] ?></h1>
+                    <div class="float-left w-50 p-3">
+                        <label for="name" class="form-label">Imię:</label><br>
+                        <input type="text" name="name" id="name" class="form-control" required>
+                    </div>
+                    <div class="float-left w-50 p-3">
+                        <label for="surname" class="form-label">Nazwisko:</label><br>
+                        <input type="text" name="surname" id="surname" class="form-control" required>
+                    </div>
 
-                <p>Numer albumu: <b><?php echo $row["NrAlbumu"] ?></b></p>
+                    <div class="float-left w-33 pl-5 pb-4 pr-4 pt-4">
+                        <label for="albumNumber" class="form-label">Numer albumu:</label><br>
+                        <input type="number" name="albumNumber" id="albumNumber" class="form-control" min="111111" max="999999" required>
+                    </div>
+                    <div class="float-left w-50 p-4">
+                        <label for="way" class="form-label">Kierunek studiów:</label><br>
+                        <input type="text" name="way" id="way" class="form-control" required>
+                    </div>
+                    <div class="float-left w-33 p-4">
+                        <label for="mean" class="form-label">Średnia:</label><br>
+                        <input type="number" name="mean" id="mean" class="form-control" min="2" max="5" step="0.01" required>
+                    </div>
+                    <div class="float-left w-75 p-3">
+                        <label for="work" class="form-label">Temat pracy magisterskiej:</label><br>
+                        <input type="text" name="work" id="work" class="form-control" required>
+                    </div>
+                    <div class="float-left w-25 p-3">
+                        <label for="mark" class="form-label">Ocena:</label><br>
+                        <input type="number" name="mark" id="mark" class="form-control" min="2" max="5" step="0.5" required>
+                    </div>
 
-                <p>Kierunek studiów: <b><?php echo $row["KierunekStudiow"] ?></b></p>
-
-                <p class="mb-4"><b>Średnia za cały okres studiów: <?php echo $row["SredniaOcen"] ?></b></p>
-
-                <h4>Praca magisterska</h4>
-                <table class="table ">
-                    <tr>
-                        <th><?php echo $row["NazwaProjektu"] ?></th>
-                        <th><?php echo $row["Ocena"] ?></th>
-                    </tr>
-                </table>
-
-                <h4>Zainteresowania naukowe:</h4>
-                <table class="table">
-                    <tr>
-                        <td><?php echo $row["Nazwa"] ?></td>
-                    </tr>
-                        <?php while ($rows = $result->fetch()) { ?>
-                        <tr>
-                            <td> <?php echo $rows["Nazwa"] ?></td>
-                        <tr>
-                        <?php } ?>
-                </table>
-
-                <?php if (isset($_SESSION["logged"])) {
-                    if ($_SESSION["logged"]) { ?>
-                        <div class="text-right">
-                            <a href="editing.php?album=<?php echo $_GET["album"] ?>">
-                                <button class="btn btn-primary">Edytuj</button>
-                            </a>
-                        </div>
-                <?php } } ?>
-                
+                    <div class="float-left text-right w-100">
+                    <a href="student.php?album=<?php echo $_GET["album"] ?>">
+                        <button class="btn btn-danger">Anuluj</button>
+                    </a>
+                    <input type="submit" value="Aktualizuj dane" class="btn btn-primary"><br>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

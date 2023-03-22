@@ -117,6 +117,8 @@ try {
                         <select name="type" class="form-control" id="type">
                             <option>Imię</option>
                             <option selected>Nazwisko</option>
+                            <option>Numer albumu</option>
+                            <option>Kierunek studiów</option>
                             <option>Temat pracy magisterskiej</option>
                         </select>
                         <label for="phrase" class="label">Wpisz poszukiwaną frazę:</label>

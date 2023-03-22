@@ -1,0 +1,10 @@
+DELIMITER //
+
+CREATE OR REPLACE PROCEDURE getHobbies()
+BEGIN
+
+    SELECT Nazwa FROM przedmioty;
+    
+END//
+
+DELIMITER ;
