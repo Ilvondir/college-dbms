@@ -4,7 +4,7 @@ a {
 
 .containerToTable {
     overflow-y: scroll;
-    max-height: 84.5vh;
+    max-height: 90vh;
 }
 
 .containerToTable::-webkit-scrollbar {

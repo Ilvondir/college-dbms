@@ -41,13 +41,20 @@ try {
                 $way,
                 $mean,
                 $work,
-                $mark,
+                $mark
             ]);
+
+            $connect3 = new PDO("mysql:host=$server;dbname=$database", $user, $password);
+            $sql4 = "call getMaxID()";
+            $result4 = $connect3->prepare($sql4);
+            $result4->execute();
+            $id = $result4->fetch();
+
 
             $sql3 = "call setHobby(?, ?)";
             $result3 = $connect->prepare($sql3);
             foreach ($hobby as $h) {
-                $result3->execute([$h, $album]);
+                $result3->execute([$h, $id["MAX(IDStudenta)"]]);
             }
 
             $success = true;
@@ -137,7 +144,7 @@ try {
         </nav>
 
 
-        <div id="content" class="p-4 p-md-5 pt-5">
+        <div id="content" class="pl-4 pr-4 pl-md-5 pr-md-5 pt-5">
             <div class="containerToTable">
                 <h2>Dodanie studenta</h2>
                 <form action="#" method="POST">
@@ -151,15 +158,15 @@ try {
                         <input type="text" name="surname" id="surname" class="form-control" required>
                     </div>
 
-                    <div class="float-left w-33 pl-5 pb-4 pr-4 pt-4">
+                    <div class="float-left w-25 p-3">
                         <label for="albumNumber" class="form-label">Numer albumu:</label><br>
                         <input type="number" name="albumNumber" id="albumNumber" class="form-control" min="111111" max="999999" required>
                     </div>
-                    <div class="float-left w-50 p-4">
+                    <div class="float-left w-50 p-3">
                         <label for="way" class="form-label">Kierunek studiów:</label><br>
                         <input type="text" name="way" id="way" class="form-control" required>
                     </div>
-                    <div class="float-left w-33 p-4">
+                    <div class="float-left w-25 p-3">
                         <label for="mean" class="form-label">Średnia:</label><br>
                         <input type="number" name="mean" id="mean" class="form-control" min="2" max="5" step="0.01" required>
                     </div>

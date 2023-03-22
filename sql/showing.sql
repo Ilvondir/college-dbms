@@ -1,6 +1,6 @@
 DELIMITER //
 
-CREATE OR REPLACE PROCEDURE showing(IN album int(6))
+CREATE OR REPLACE PROCEDURE showing(IN id int)
 BEGIN
 
     SELECT Imie, Nazwisko, NrAlbumu, KierunekStudiow, SredniaOcen, NazwaProjektu, Ocena, przedmioty.Nazwa
@@ -11,7 +11,7 @@ BEGIN
     ON studenci.IDStudenta=transfer.IDStudenta
     INNER JOIN przedmioty
     ON transfer.IDPrzedmiotu=przedmioty.IDPrzedmiotu
-    WHERE studenci.NrAlbumu=album;
+    WHERE studenci.IDStudenta=id;
     
 END//
 

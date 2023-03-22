@@ -79,7 +79,7 @@ if (isset($_SESSION["logged"])) {
         </nav>
 
 
-        <div id="content" class="p-4 p-md-5 pt-5 d-flex justify-content-center align-items-center">
+        <div id="content" class="pl-4 pr-4 pl-md-5 pr-md-5 pt-5 d-flex justify-content-center align-items-center">
             <form class="form" action="#" method="POST">
                 <label class="label" for="login">Podaj login:</label><br>
                 <input type="text" id="login" name="login" class="form-control" required><br>

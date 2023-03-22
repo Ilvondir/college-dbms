@@ -9,7 +9,7 @@ if (isset($_SESSION["logged"])) {
     if (!$_SESSION["logged"]) header("Location: index.php");
 }
 
-if (!isset($_GET["album"])) {
+if (!isset($_GET["id"])) {
     header("Location: index.php");
 } else {
     $server = "localhost";
@@ -22,9 +22,47 @@ if (!isset($_GET["album"])) {
         $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $sql = "call showing(?)";
-
         $result = $connect->prepare($sql);
-        $result->execute([$_GET["album"]]);
+        $result->execute([$_GET["id"]]);
+
+        $data = $result->fetch();
+
+        if ($_SERVER["REQUEST_METHOD"]=="POST") {
+            $id = $_GET["id"];
+            $name = $_POST["name"];
+            $surname = $_POST["surname"];
+            $album = $_POST["albumNumber"];
+            $way = $_POST["way"];
+            $mean = $_POST["mean"];
+            $work = $_POST["work"];
+            $mark = $_POST["mark"];
+            $hobby = $_POST["hobby"];
+
+            $connect3 = new PDO("mysql:host=$server;dbname=$database", $user, $password);
+
+            $sql3 = "call updating(?, ?, ?, ?, ?, ?, ?, ?)";
+
+            $result3 = $connect3->prepare($sql3);
+            $result3->execute([
+                $id,
+                $name,
+                $surname,
+                $album,
+                $way,
+                $mean,
+                $work,
+                $mark
+            ]);
+
+            $sql4 = "call setHobby(?, ?)";
+            $result4 = $connect3->prepare($sql4);
+            foreach ($hobby as $h) {
+                $result4->execute([$h, $id]);
+            }
+
+            header("Location: student.php?id=".$_GET["id"]);
+        }
+
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -104,44 +142,69 @@ if (!isset($_GET["album"])) {
         </nav>
 
 
-        <div id="content" class="p-4 p-md-5 pt-5">
+        <div id="content" class="pl-4 pr-4 pl-md-5 pr-md-5 pt-5">
             <div class="containerToTable">
                 <form action="#" method="POST">
 
                     <div class="float-left w-50 p-3">
                         <label for="name" class="form-label">Imię:</label><br>
-                        <input type="text" name="name" id="name" class="form-control" required>
+                        <input type="text" name="name" value="<?php echo $data["Imie"] ?>" id="name" class="form-control" required>
                     </div>
                     <div class="float-left w-50 p-3">
                         <label for="surname" class="form-label">Nazwisko:</label><br>
-                        <input type="text" name="surname" id="surname" class="form-control" required>
+                        <input type="text" name="surname" value="<?php echo $data["Nazwisko"] ?>" id="surname" class="form-control" required>
                     </div>
 
-                    <div class="float-left w-33 pl-5 pb-4 pr-4 pt-4">
+                    <div class="float-left w-25 p-3">
                         <label for="albumNumber" class="form-label">Numer albumu:</label><br>
-                        <input type="number" name="albumNumber" id="albumNumber" class="form-control" min="111111" max="999999" required>
+                        <input type="number" name="albumNumber" value="<?php echo $data["NrAlbumu"] ?>" id="albumNumber" class="form-control" min="111111" max="999999" required>
                     </div>
-                    <div class="float-left w-50 p-4">
+                    <div class="float-left w-50 p-3">
                         <label for="way" class="form-label">Kierunek studiów:</label><br>
-                        <input type="text" name="way" id="way" class="form-control" required>
+                        <input type="text" name="way" value="<?php echo $data["KierunekStudiow"] ?>" id="way" class="form-control" required>
                     </div>
-                    <div class="float-left w-33 p-4">
+                    <div class="float-left w-25 p-3">
                         <label for="mean" class="form-label">Średnia:</label><br>
-                        <input type="number" name="mean" id="mean" class="form-control" min="2" max="5" step="0.01" required>
+                        <input type="number" name="mean" value="<?php echo $data["SredniaOcen"] ?>" id="mean" class="form-control" min="2" max="5" step="0.01" required>
                     </div>
                     <div class="float-left w-75 p-3">
                         <label for="work" class="form-label">Temat pracy magisterskiej:</label><br>
-                        <input type="text" name="work" id="work" class="form-control" required>
+                        <input type="text" name="work" value="<?php echo $data["NazwaProjektu"] ?>" id="work" class="form-control" required>
                     </div>
                     <div class="float-left w-25 p-3">
                         <label for="mark" class="form-label">Ocena:</label><br>
-                        <input type="number" name="mark" id="mark" class="form-control" min="2" max="5" step="0.5" required>
+                        <input type="number" name="mark" id="mark" value="<?php echo $data["Ocena"] ?>" class="form-control" min="2" max="5" step="0.5" required>
+                    </div>
+
+                    <div class="float-left w-100 p-3">
+                        <label for="hobby" class="form-label">Wybierz hobby:</label><br>
+                        <select name="hobby[]" id="hobby" class="w-100 form-select" required multiple>
+                            <?php
+
+                            $tab = [$data["Nazwa"]];
+
+                            while ($rows = $result->fetch()) {
+                                array_push($tab, $rows["Nazwa"]);
+                            }
+
+                            $connect2 = new PDO("mysql:host=$server;dbname=$database", $user, $password);
+
+                            $sql2 = "call getHobbies()";
+                            $result2 = $connect2->prepare($sql2);
+                            $result2->execute();
+
+                            while ($hobbies = $result2->fetch()) {
+                                if (in_array($hobbies["Nazwa"], $tab)) echo "<option selected>";
+                                else echo "<option>";
+                                echo $hobbies["Nazwa"];
+                                echo "</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
 
                     <div class="float-left text-right w-100">
-                    <a href="student.php?album=<?php echo $_GET["album"] ?>">
-                        <button class="btn btn-danger">Anuluj</button>
-                    </a>
+                    <button type="button" onclick="window.location = 'student.php?id=<?php echo $_GET["id"] ?>'" class="btn btn-danger">Anuluj</button>
                     <input type="submit" value="Aktualizuj dane" class="btn btn-primary"><br>
                     </div>
                 </form>

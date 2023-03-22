@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_GET["album"])) {
+if (!isset($_GET["id"])) {
     header("Location: index.php");
 } else {
     $server = "localhost";
@@ -16,7 +16,7 @@ if (!isset($_GET["album"])) {
         $sql = "call showing(?)";
 
         $result = $connect->prepare($sql);
-        $result->execute([$_GET["album"]]);
+        $result->execute([$_GET["id"]]);
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -96,7 +96,7 @@ if (!isset($_GET["album"])) {
         </nav>
 
 
-        <div id="content" class="p-4 p-md-5 pt-5">
+        <div id="content" class="pl-4 pr-4 pl-md-5 pr-md-5 pt-5">
             <div class="containerToTable">
                 <?php $row = $result->fetch() ?>
 
@@ -131,7 +131,7 @@ if (!isset($_GET["album"])) {
                 <?php if (isset($_SESSION["logged"])) {
                     if ($_SESSION["logged"]) { ?>
                         <div class="text-right">
-                            <a href="editing.php?album=<?php echo $_GET["album"] ?>">
+                            <a href="editing.php?id=<?php echo $_GET["id"] ?>">
                                 <button class="btn btn-primary">Edytuj</button>
                             </a>
                         </div>
