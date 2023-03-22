@@ -1,0 +1,10 @@
+DELIMITER //
+
+CREATE OR REPLACE PROCEDURE getMaxID()
+BEGIN
+
+    SELECT MAX(IDStudenta) FROM studenci;
+    
+END//
+
+DELIMITER ;

@@ -106,7 +106,7 @@ try {
         </nav>
 
 
-        <div id="content" class="p-4 p-md-5 pt-5">
+        <div id="content" class="pl-4 pr-4 pl-md-5 pr-md-5 pt-5">
             <div class="containerToTable">
 
                 <h2>Wyszukaj</h2>
@@ -140,15 +140,13 @@ try {
                         <th>Praca magisterska</th>
                     </tr>
                     <?php while ($rows = $result->fetch()) { ?>
-                        <tr onclick="window.location = 'student.php?album=<?php echo $rows["NrAlbumu"] ?>'">
-                            <a href="student.php?album=<?php echo $rows["NrAlbumu"] ?>">
-                                <td><?php echo $rows["IDStudenta"] ?></td>
-                                <td><?php echo $rows["Nazwisko"] ?></td>
-                                <td><?php echo $rows["Imie"] ?></td>
-                                <td><?php echo $rows["NrAlbumu"] ?></td>
-                                <td><?php echo $rows["KierunekStudiow"] ?></td>
-                                <td><?php echo $rows["NazwaProjektu"] ?></td>
-                            </a>
+                        <tr onclick="window.location = 'student.php?id=<?php echo $rows["IDStudenta"] ?>'">
+                            <td><?php echo $rows["IDStudenta"] ?></td>
+                            <td><?php echo $rows["Nazwisko"] ?></td>
+                            <td><?php echo $rows["Imie"] ?></td>
+                            <td><?php echo $rows["NrAlbumu"] ?></td>
+                            <td><?php echo $rows["KierunekStudiow"] ?></td>
+                            <td><?php echo $rows["NazwaProjektu"] ?></td>
                         </tr>
                     <?php } ?>
                 </table>
