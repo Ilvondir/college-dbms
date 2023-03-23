@@ -35,7 +35,6 @@ if (!isset($_GET["id"])) {
 
     <script src="js/libs/jquery.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" defer></script>
-
     <script src="js/navbar.js" defer></script>
 
     <link rel="shortcut icon" href="img/icon.ico">
@@ -77,7 +76,7 @@ if (!isset($_GET["id"])) {
                 <li>
                     <?php
                     if (isset($_SESSION["logged"])) {
-                        if ($_SESSION["logged"]) echo '<a href="logout.php">';
+                        if ($_SESSION["logged"]) echo '<a href="php/logout.php">';
                         else echo '<a href="login.php">';
                     } else echo '<a href="login.php">';
 
@@ -131,6 +130,7 @@ if (!isset($_GET["id"])) {
                 <?php if (isset($_SESSION["logged"])) {
                     if ($_SESSION["logged"]) { ?>
                         <div class="text-right">
+                            <button onclick="authorization()" id="auth" class="btn btn-danger">Usuń studenta</button>
                             <a href="editing.php?id=<?php echo $_GET["id"] ?>">
                                 <button class="btn btn-primary">Edytuj</button>
                             </a>
@@ -140,7 +140,12 @@ if (!isset($_GET["id"])) {
             </div>
         </div>
     </div>
-
+<script>
+    function authorization() {
+        let con = confirm("Czy na pewno chcesz usunąć tego studenta?");
+        if (con) window.location = "php/delete.php?id=<?php echo $_GET["id"] ?>";
+}
+</script>
 </body>
 
 </html>

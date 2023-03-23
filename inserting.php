@@ -83,7 +83,6 @@ try {
 
     <script src="js/libs/jquery.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" defer></script>
-
     <script src="js/navbar.js" defer></script>
 
     <link rel="shortcut icon" href="img/icon.ico">
@@ -125,7 +124,7 @@ try {
                 <li>
                     <?php
                     if (isset($_SESSION["logged"])) {
-                        if ($_SESSION["logged"]) echo '<a href="logout.php">';
+                        if ($_SESSION["logged"]) echo '<a href="php/logout.php">';
                         else echo '<a href="login.php">';
                     } else echo '<a href="login.php">';
 
@@ -181,7 +180,7 @@ try {
 
                     <div class="float-left w-100 p-3">
                         <label for="hobby" class="form-label">Wybierz hobby:</label><br>
-                        <select name="hobby[]" id="hobby" class="w-100 form-select" required multiple>
+                        <select name="hobby[]" id="hobby" class="w-100 select" required multiple>
                             <?php
                             while ($hobbies = $result2->fetch()) {
                                 echo "<option>" . $hobbies["Nazwa"] . "</option>";
