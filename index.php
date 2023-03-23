@@ -76,12 +76,22 @@ session_start();
 
 
         <div id="content" class="pl-4 pr-4 pl-md-5 pr-md-5 pt-5">
-            <?php
-            if (isset($_SESSION["logged"])) {
-                if ($_SESSION["logged"]) echo "<h1 class='h1'>Witaj, Administratorze!</h1>";
-            }
-            ?>
+            <div class="containerToTable">
+                <?php
+                if (isset($_SESSION["logged"])) {
+                    if ($_SESSION["logged"]) echo "<h1 class='h1 mb-5'>Witaj, Administratorze!</h1>";
+                }
+                ?>
+                <h3>Lorem ipsum</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam facilisis vulputate dui sed dapibus. Phasellus sed facilisis tellus. Curabitur ac libero consequat est sodales elementum. Nam accumsan erat eu sem ultricies ultrices. Vestibulum sed massa pharetra, maximus metus sit amet, rhoncus justo. Phasellus viverra lacinia felis. Morbi vel eros erat. Donec sed nisl vel turpis bibendum eleifend ac a velit. Aenean vitae massa libero. Aliquam quam massa, consectetur in faucibus eu, pharetra a est. Praesent volutpat accumsan sagittis. Pellentesque eu elementum urna, id malesuada lectus. Nam tempus diam non augue faucibus, et tempus magna pellentesque. Vestibulum nulla nunc, mattis id rhoncus quis, congue at ex. In non felis at nulla vulputate efficitur.</p>
 
+                <h3>Lorem ipsum</h3>
+                <p>Vestibulum ac sapien dui. Mauris pharetra mauris vitae turpis eleifend, id faucibus leo ultrices. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque rhoncus est non odio sollicitudin maximus. Mauris aliquet, nisl vitae blandit ornare, purus neque sollicitudin libero, non consequat diam metus ac ipsum. Aenean scelerisque lectus in nunc sodales, non consequat orci pulvinar. Suspendisse sit amet neque eu neque tristique ultrices a a odio. Integer varius, est non auctor semper, nunc mauris mattis tortor, in mollis magna ex id velit. Nullam feugiat quam mauris, viverra vulputate odio suscipit nec. In leo nisl, aliquet vel lorem suscipit, pharetra convallis magna. Nam iaculis leo sed turpis feugiat ornare. Pellentesque odio lacus, pellentesque ac pellentesque vel, commodo eu lectus. Mauris gravida, ipsum eget placerat blandit, quam turpis interdum enim, eget blandit nisi diam ut tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a diam lorem.
+
+                <p>Morbi eu ante sed tellus ultrices ullamcorper in vitae lectus. Aliquam pellentesque enim tellus, non aliquam augue faucibus eget. Etiam sollicitudin gravida libero. Sed efficitur nisl at nisi semper, interdum gravida lorem placerat. Morbi et quam sit amet nibh euismod semper. Ut vehicula leo turpis, id laoreet purus consequat vel. Duis ullamcorper congue luctus. Nulla facilisi. Aliquam commodo quam quam, non posuere neque rutrum id. Suspendisse faucibus, libero sed condimentum feugiat, dui nulla accumsan justo, in ullamcorper dolor ligula eu elit. Morbi pretium, nisi sit amet sagittis euismod, nunc mi dignissim magna, eget semper dolor est vitae ex. Aenean posuere lorem quis semper auctor. Praesent commodo fermentum gravida. Nullam sit amet venenatis tellus.</p>
+
+                <h3>Lorem ipsum</h3>
+                <p>Donec ut auctor tortor. Phasellus id accumsan nunc. Aliquam quis varius risus, eu volutpat nunc. Nullam posuere accumsan lacus vitae pretium. Curabitur fermentum eu felis id mattis. Fusce feugiat eros non facilisis posuere. Proin euismod tortor velit. Nunc dapibus posuere turpis et tincidunt. Cras id ultrices lacus. Vivamus vulputate urna non ultricies eleifend. Sed pretium urna ipsum, non finibus ligula sollicitudin quis. In hac habitasse platea dictumst. Morbi in sodales ligula.</p>
         </div>
     </div>
 
