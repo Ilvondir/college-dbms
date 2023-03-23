@@ -87,7 +87,7 @@ try {
                 <li>
                     <?php
                     if (isset($_SESSION["logged"])) {
-                        if ($_SESSION["logged"]) echo '<a href="logout.php">';
+                        if ($_SESSION["logged"]) echo '<a href="php/logout.php">';
                         else echo '<a href="login.php">';
                     } else echo '<a href="login.php">';
 
