@@ -133,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             <form method="POST" action="#">
-                <input type="submit" class="btn btn-primary mt-4" value="Wyeksportuj bazę do pliku">
+                <input type="submit" class="btn btn-primary mt-4" value="Pobierz eksport bazy">
             </form>
         </div>
     </div>

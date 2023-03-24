@@ -10,6 +10,7 @@ if (isset($_SESSION["logged"])) {
 }
 
 $success = false;
+$importSucces = false;
 
 try {
     $server = "localhost";
@@ -58,6 +59,39 @@ try {
             }
 
             $success = true;
+        }
+
+        if (isset($_POST["tab"])) {
+            $newFileName = "import.csv";
+            $tab = $_POST["tab"];
+
+            if (move_uploaded_file($_FILES["file"]["tmp_name"], $newFileName)) {
+
+                if ($tab == "studenci") $sql = "call importStudenci(?, ?, ?, ?, ?)";
+                if ($tab == "projekty") $sql = "call importProjekty(?, ?, ?)";
+                if ($tab == "transfer") $sql = "call importTransfer(?, ?)";
+                if ($tab == "przedmioty") $sql = "call importPrzedmioty(?, ?)";
+                if ($tab == "wykladowcy") $sql = "call importWykladowcy(?, ?, ?, ?, ?)";
+                if ($tab == "dziedzinynauki") $sql = "call importDziedzinyNauki(?, ?)";
+                $result = $connect->prepare($sql);
+
+                setlocale(LC_ALL, 'pl_PL.UTF-8');
+                $file = fopen($newFileName, "r");
+
+                while ($row = fgetcsv($file)) {
+                    if ($tab == "studenci") $result->execute([$row[1], $row[2], $row[3], $row[4], $row[5]]);
+                    if ($tab == "projekty") $result->execute([$row[0], $row[1], $row[2]]);
+                    if ($tab == "transfer") $result->execute([$row[0], $row[1]]);
+                    if ($tab == "przedmioty") $result->execute([$row[1], $row[2]]);
+                    if ($tab == "wykladowcy") $result->execute([$row[1], $row[2], $row[3], $row[4], $row[5]]);
+                    if ($tab == "dziedzinynauki") $result->execute([$row[1], $row[2]]);
+                }
+
+                $importSucces = true;
+                fclose($file);
+                unlink($newFileName);
+
+            } else exit;   
         }
     }
 
@@ -196,6 +230,34 @@ try {
                             if ($success) echo "Dodanie studenta przebiegło pomyślnie.";
                         ?>
                     </div>
+                </form>
+
+                <h2 class="mt-5">Importowanie tabel</h2>
+                <form method="POST" action="#" enctype="multipart/form-data">
+                    <h6 class="mt-4">Wybierz tabelę:</h6>
+                    <input type="radio" name="tab" id="studenci" value="studenci">
+                    <label for="studenci">Studenci</label><br>
+
+                    <input type="radio" name="tab" id="projekty" value="projekty">
+                    <label for="projekty">Projekty</label><br>
+
+                    <input type="radio" name="tab" id="zainteresowania" value="transfer">
+                    <label for="zainteresowania">Zainteresowania</label><br>
+
+                    <input type="radio" name="tab" id="przedmioty" value="przedmioty">
+                    <label for="przedmioty">Przedmioty</label><br>
+
+                    <input type="radio" name="tab" id="wykladowcy" value="wykladowcy">
+                    <label for="wykladowcy">Wykładowcy</label><br>
+
+                    <input type="radio" name="tab" id="dziedziny" value="dziedzinynauki" required>
+                    <label for="dziedziny">Dziedziny nauki</label><br>
+
+                    <input type="file" name="file" class="form-control mt-4" accept=".csv" required>
+                    <input type="submit" class="btn btn-primary mt-4" value="Prześlij plik do importu">
+                    <?php
+                        if ($importSucces) echo "<br>Import zakończony powodzeniem.";
+                    ?>
                 </form>
             </div>
         </div>
