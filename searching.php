@@ -176,6 +176,10 @@ try {
                         </tr>
                     <?php } ?>
                 </table>
+
+                <div class="w-100 text-right">
+                    <button onclick="window.location = 'php/filterExport.php?<?php if (isset($_SERVER["QUERY_STRING"])) echo $_SERVER['QUERY_STRING'] ?>'" class="mt-3 btn btn-primary" style="cursor: pointer">Eksportuj wyniki wyszukiwania</btn> 
+                </div>
             </div>
         </div>
     </div>

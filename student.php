@@ -139,7 +139,7 @@ if (!isset($_GET["id"])) {
     function authorization() {
         let con = confirm("Czy na pewno chcesz usunąć tego studenta?");
         if (con) window.location = "php/delete.php?id=<?php echo $_GET["id"] ?>";
-}
+    }
 </script>
 </body>
 
