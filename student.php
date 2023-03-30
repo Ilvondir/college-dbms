@@ -103,9 +103,9 @@ if (!isset($_GET["id"])) {
 
                 <p>Numer albumu: <b><?php echo $row["NrAlbumu"] ?></b></p>
 
-                <p>Kierunek studiów: <b><?php echo $row["KierunekStudiow"] ?></b></p>
+                <p>Kierunek studiów: <b><?php echo $row["Kierunek"] ?></b></p>
 
-                <p class="mb-4"><b>Średnia za cały okres studiów: <?php echo $row["SredniaOcen"] ?></b></p>
+                <p class="mb-5"><b>Średnia za cały okres studiów: <?php echo $row["SredniaOcen"] ?></b></p>
 
                 <h4>Praca magisterska</h4>
                 <table class="table ">
@@ -115,16 +115,11 @@ if (!isset($_GET["id"])) {
                     </tr>
                 </table>
 
-                <h4>Zainteresowania naukowe:</h4>
+                <h4 class="mt-5">Obszar zainteresowań:</h4>
                 <table class="table">
                     <tr>
                         <td><?php echo $row["Nazwa"] ?></td>
                     </tr>
-                        <?php while ($rows = $result->fetch()) { ?>
-                        <tr>
-                            <td> <?php echo $rows["Nazwa"] ?></td>
-                        <tr>
-                        <?php } ?>
                 </table>
 
                 <?php if (isset($_SESSION["logged"])) {
@@ -144,7 +139,7 @@ if (!isset($_GET["id"])) {
     function authorization() {
         let con = confirm("Czy na pewno chcesz usunąć tego studenta?");
         if (con) window.location = "php/delete.php?id=<?php echo $_GET["id"] ?>";
-}
+    }
 </script>
 </body>
 
