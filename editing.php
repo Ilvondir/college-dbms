@@ -40,7 +40,7 @@ if (!isset($_GET["id"])) {
 
             $connect3 = new PDO("mysql:host=$server;dbname=$database", $user, $password);
 
-            $sql3 = "call updating(?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql3 = "call updating(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $result3 = $connect3->prepare($sql3);
             $result3->execute([
@@ -51,14 +51,9 @@ if (!isset($_GET["id"])) {
                 $way,
                 $mean,
                 $work,
-                $mark
+                $mark,
+                $hobby
             ]);
-
-            $sql4 = "call setHobby(?, ?)";
-            $result4 = $connect3->prepare($sql4);
-            foreach ($hobby as $h) {
-                $result4->execute([$h, $id]);
-            }
 
             header("Location: student.php?id=".$_GET["id"]);
         }
@@ -144,6 +139,8 @@ if (!isset($_GET["id"])) {
 
         <div id="content" class="pl-4 pr-4 pl-md-5 pr-md-5 pt-5">
             <div class="containerToTable">
+                <h2 class="mb-2">Edytuj użytkownika</h2>
+
                 <form action="#" method="POST">
 
                     <div class="float-left w-50 p-3">
@@ -161,7 +158,7 @@ if (!isset($_GET["id"])) {
                     </div>
                     <div class="float-left w-50 p-3">
                         <label for="way" class="form-label">Kierunek studiów:</label><br>
-                        <input type="text" name="way" value="<?php echo $data["KierunekStudiow"] ?>" id="way" class="form-control" required>
+                        <input type="text" name="way" value="<?php echo $data["Kierunek"] ?>" id="way" class="form-control" required>
                     </div>
                     <div class="float-left w-25 p-3">
                         <label for="mean" class="form-label">Średnia:</label><br>
@@ -177,29 +174,8 @@ if (!isset($_GET["id"])) {
                     </div>
 
                     <div class="float-left w-100 p-3">
-                        <label for="hobby" class="form-label">Wybierz hobby:</label><br>
-                        <select name="hobby[]" id="hobby" class="w-100 form-select" required multiple>
-                            <?php
-
-                            $tab = [$data["Nazwa"]];
-
-                            while ($rows = $result->fetch()) {
-                                array_push($tab, $rows["Nazwa"]);
-                            }
-
-                            $connect2 = new PDO("mysql:host=$server;dbname=$database", $user, $password);
-
-                            $sql2 = "call getHobbies()";
-                            $result2 = $connect2->prepare($sql2);
-                            $result2->execute();
-
-                            while ($hobbies = $result2->fetch()) {
-                                if (in_array($hobbies["Nazwa"], $tab)) echo "<option selected>";
-                                else echo "<option>";
-                                echo $hobbies["Nazwa"];
-                                echo "</option>";
-                            }
-                            ?>
+                        <label for="hobby" class="form-label">Podaj hobby:</label><br>
+                        <input type="text" name="hobby" value="<?php echo $data["Nazwa"] ?>" id="hobby" class="w-100 form-control" required>
                         </select>
                     </div>
 

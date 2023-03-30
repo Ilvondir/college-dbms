@@ -10,23 +10,31 @@ try {
     $connect = new PDO("mysql:host=$server;dbname=$database", $user, $password);
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "call searching(?, ?)";
+    $sql = "call searching(?, ?, ?, ?)";
 
     if (isset($_GET["phrase"]) && isset($_GET["type"])) {
-        if ($_GET["phrase"] == "") {
+        if ($_GET["phrase"] == "" && ($_GET["minMean"]=="" && $_GET["maxMean"]=="")) {
             $phrase = "";
             $condition = "Nazwisko";
+            $minMean = 2;
+            $maxMean = 5;
+
         } else {
             $phrase = $_GET["phrase"];
             $condition = $_GET["type"];
+            $minMean = $_GET["minMean"];
+            $maxMean = $_GET["maxMean"];
         }
     } else {
         $phrase = "";
         $condition = "Nazwisko";
+        $minMean = 2;
+        $maxMean = 5;
+
     }
 
     $result = $connect->prepare($sql);
-    $result->execute([$condition, $phrase]);
+    $result->execute([$condition, $phrase, $minMean, $maxMean]);
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
@@ -47,6 +55,7 @@ try {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" defer></script>
 
     <script src="js/navbar.js" defer></script>
+    <script src="js/script.js" defer></script>
 
     <link rel="shortcut icon" href="img/icon.ico">
 
@@ -114,15 +123,30 @@ try {
                 <div class="d-flex justify-content-center">
                     <form action="#" method="GET" class="form w-50">
                         <label for="type" class="label">Wybierz kryterium:</label>
-                        <select name="type" class="form-control" id="type">
+                        <select name="type" class="form-control" id="type" onchange="displays()">
                             <option>Imię</option>
                             <option selected>Nazwisko</option>
                             <option>Numer albumu</option>
                             <option>Kierunek studiów</option>
                             <option>Temat pracy magisterskiej</option>
+                            <option>Średnia ocen</option>
                         </select>
-                        <label for="phrase" class="label">Wpisz poszukiwaną frazę:</label>
-                        <input type="text" id="phrase" name="phrase" class="form-control">
+
+                        <div class="" id="fd1">
+                            <label for="phrase" class="label">Wpisz poszukiwaną frazę:</label>
+                            <input type="text" id="phrase" name="phrase" class="form-control">
+                        </div>
+                        <div class="d-none" id="fd2">
+                            <label class="label">Wybierz zakres średniej:</label><br>
+                            <div class="input-group">
+                                <input type="number" class="form-control" min="2" max="5" value="2" step="0.01" name="minMean">
+                                <div class="input-group-append input-group-prepend">
+                                    <div class="input-group-text"> do </div>
+                                </div>
+                                <input type="number" class="form-control" min="2" max="5" value="5" step="0.01" name="maxMean">
+                            </div>
+                        </div>
+
                         <div class="text-center">
                             <input type="submit" class="btn btn-primary mt-3" value="Szukaj">
                         </div>
@@ -138,6 +162,7 @@ try {
                         <th>Numer albumu</th>
                         <th>Kierunek studiów</th>
                         <th>Praca magisterska</th>
+                        <th>Średnia ocen</th>
                     </tr>
                     <?php while ($rows = $result->fetch()) { ?>
                         <tr onclick="window.location = 'student.php?id=<?php echo $rows["IDStudenta"] ?>'">
@@ -145,8 +170,9 @@ try {
                             <td><?php echo $rows["Nazwisko"] ?></td>
                             <td><?php echo $rows["Imie"] ?></td>
                             <td><?php echo $rows["NrAlbumu"] ?></td>
-                            <td><?php echo $rows["KierunekStudiow"] ?></td>
+                            <td><?php echo $rows["Kierunek"] ?></td>
                             <td><?php echo $rows["NazwaProjektu"] ?></td>
+                            <td><?php echo $rows["SredniaOcen"] ?></td>
                         </tr>
                     <?php } ?>
                 </table>

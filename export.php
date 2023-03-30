@@ -14,9 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $sql = "call showToExport(?)";
 
-        $tabs = ["studenci", "projekty", "transfer", "przedmioty", "dziedzinynauki", "wykladowcy"];
+        $tabs = ["studenci", "projekty", "zainteresowania", "kierunki"];
 
-        $archive = "export-". date("Y-m-d-H-i-s").".zip";
+        $archive = "export-". date("Ymd-His").".zip";
         $zip = new ZipArchive();
         if ($zip->open($archive, ZipArchive::CREATE)!=TRUE) {
             exit("cannot open\n");

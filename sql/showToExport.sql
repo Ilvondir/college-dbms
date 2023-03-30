@@ -11,20 +11,12 @@ BEGIN
         SELECT * FROM projekty;
     END IF;
 
-    IF tab="transfer" THEN
-        SELECT * FROM transfer;
+    IF tab="zainteresowania" THEN
+        SELECT * FROM zainteresowania;
     END IF;
 
-    IF tab="przedmioty" THEN
-        SELECT * FROM przedmioty;
-    END IF;
-
-    IF tab="dziedzinynauki" THEN
-        SELECT * FROM dziedzinynauki;
-    END IF;
-
-    IF tab="wykladowcy" THEN
-        SELECT * FROM wykladowcy;
+    IF tab="kierunki" THEN
+        SELECT * FROM kierunki;
     END IF;
     
 END//

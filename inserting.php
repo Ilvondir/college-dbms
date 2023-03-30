@@ -32,7 +32,7 @@ try {
             $mark = $_POST["mark"];
             $hobby = $_POST["hobby"];
 
-            $sql = "call inserting(?, ?, ?, ?, ?, ?, ?)";
+            $sql = "call inserting(?, ?, ?, ?, ?, ?, ?, ?)";
 
             $result = $connect->prepare($sql);
             $result->execute([
@@ -42,21 +42,9 @@ try {
                 $way,
                 $mean,
                 $work,
-                $mark
+                $mark,
+                $hobby
             ]);
-
-            $connect3 = new PDO("mysql:host=$server;dbname=$database", $user, $password);
-            $sql4 = "call getMaxID()";
-            $result4 = $connect3->prepare($sql4);
-            $result4->execute();
-            $id = $result4->fetch();
-
-
-            $sql3 = "call setHobby(?, ?)";
-            $result3 = $connect->prepare($sql3);
-            foreach ($hobby as $h) {
-                $result3->execute([$h, $id["MAX(IDStudenta)"]]);
-            }
 
             $success = true;
         }
@@ -69,10 +57,8 @@ try {
 
                 if ($tab == "studenci") $sql = "call importStudenci(?, ?, ?, ?, ?)";
                 if ($tab == "projekty") $sql = "call importProjekty(?, ?, ?)";
-                if ($tab == "transfer") $sql = "call importTransfer(?, ?)";
-                if ($tab == "przedmioty") $sql = "call importPrzedmioty(?, ?)";
-                if ($tab == "wykladowcy") $sql = "call importWykladowcy(?, ?, ?, ?, ?)";
-                if ($tab == "dziedzinynauki") $sql = "call importDziedzinyNauki(?, ?)";
+                if ($tab == "zainteresowania") $sql = "call importZainteresowania(?, ?)";
+                if ($tab == "kierunki") $sql = "call importKierunki(?)";
                 $result = $connect->prepare($sql);
 
                 setlocale(LC_ALL, 'pl_PL.UTF-8');
@@ -81,10 +67,8 @@ try {
                 while ($row = fgetcsv($file)) {
                     if ($tab == "studenci") $result->execute([$row[1], $row[2], $row[3], $row[4], $row[5]]);
                     if ($tab == "projekty") $result->execute([$row[0], $row[1], $row[2]]);
-                    if ($tab == "transfer") $result->execute([$row[0], $row[1]]);
-                    if ($tab == "przedmioty") $result->execute([$row[1], $row[2]]);
-                    if ($tab == "wykladowcy") $result->execute([$row[1], $row[2], $row[3], $row[4], $row[5]]);
-                    if ($tab == "dziedzinynauki") $result->execute([$row[1], $row[2]]);
+                    if ($tab == "zainteresowania") $result->execute([$row[0], $row[1]]);
+                    if ($tab == "kierunki") $result->execute([$row[1]]);
                 }
 
                 $importSucces = true;
@@ -94,11 +78,6 @@ try {
             } else exit;   
         }
     }
-
-    $sql2 = "call getHobbies()";
-    $result2 = $connect->prepare($sql2);
-    $result2->execute();
-
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
@@ -213,13 +192,8 @@ try {
                     </div>
 
                     <div class="float-left w-100 p-3">
-                        <label for="hobby" class="form-label">Wybierz hobby:</label><br>
-                        <select name="hobby[]" id="hobby" class="w-100 select" required multiple>
-                            <?php
-                            while ($hobbies = $result2->fetch()) {
-                                echo "<option>" . $hobbies["Nazwa"] . "</option>";
-                            }
-                            ?>
+                        <label for="hobby" class="form-label">Podaj hobby:</label><br>
+                        <input type="text" name="hobby" id="hobby" class="w-100 form-control" required>
                         </select>
                     </div>
 
@@ -241,17 +215,11 @@ try {
                     <input type="radio" name="tab" id="projekty" value="projekty">
                     <label for="projekty">Projekty</label><br>
 
-                    <input type="radio" name="tab" id="zainteresowania" value="transfer">
+                    <input type="radio" name="tab" id="zainteresowania" value="zainteresowania">
                     <label for="zainteresowania">Zainteresowania</label><br>
 
-                    <input type="radio" name="tab" id="przedmioty" value="przedmioty">
-                    <label for="przedmioty">Przedmioty</label><br>
-
-                    <input type="radio" name="tab" id="wykladowcy" value="wykladowcy">
-                    <label for="wykladowcy">Wykładowcy</label><br>
-
-                    <input type="radio" name="tab" id="dziedziny" value="dziedzinynauki" required>
-                    <label for="dziedziny">Dziedziny nauki</label><br>
+                    <input type="radio" name="tab" id="kierunki" value="kierunki">
+                    <label for="kierunki">Kierunki studiów</label><br>
 
                     <input type="file" name="file" class="form-control mt-4" accept=".csv" required>
                     <input type="submit" class="btn btn-primary mt-4" value="Prześlij plik do importu">
