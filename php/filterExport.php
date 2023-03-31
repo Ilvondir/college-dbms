@@ -46,11 +46,10 @@ while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
 
 fclose($file);
 
-header('Content-Disposition: archive; filename="'.$filename.'"');
+header('Content-Disposition: attachment; filename="'.$filename.'"');
 readfile($filename);
 unlink($filename);
 exit();
 
 if (isset($_SERVER["QUERY_STRING"])) header("Location: ../searching.php?" . $_SERVER["QUERY_STRING"]);
 else header("Location: ../searching.php");
-
