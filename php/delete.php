@@ -10,7 +10,7 @@
         $connect = new PDO("mysql:host=$server;dbname=$database", $user, $password);
         $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = "call searching(?, ?, ?, ?);";
+        $sql = "call deleting(?);";
         $result = $connect->prepare($sql);
         $result->execute([$id]);
     }

@@ -1,0 +1,10 @@
+DELIMITER //
+
+CREATE OR REPLACE PROCEDURE getKierunki()
+BEGIN
+
+    SELECT * FROM kierunki;
+
+END//
+
+DELIMITER ;
