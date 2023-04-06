@@ -14,7 +14,6 @@ try {
 
     $result = $connect->prepare($sql);
     $result->execute();
-
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
@@ -103,15 +102,15 @@ try {
                         <th>ID</th>
                         <th>Kierunek</th>
                     </tr>
-                    <?php while($row = $result->fetch()) { ?>
-                    <tr>
-                        <td><?php echo $row["ID"] ?></td>
-                        <td><?php echo $row["Nazwa"] ?></td>
-                    </tr>
+                    <?php while ($row = $result->fetch()) { ?>
+                        <tr>
+                            <td><?php echo $row["ID"] ?></td>
+                            <td><?php echo $row["Nazwa"] ?></td>
+                        </tr>
                     <?php } ?>
                 </table>
 
-    </div>
+            </div>
 
 </body>
 

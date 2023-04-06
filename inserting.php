@@ -74,8 +74,7 @@ try {
                 $importSucces = true;
                 fclose($file);
                 unlink($newFileName);
-
-            } else exit;   
+            } else exit;
         }
     }
 } catch (PDOException $e) {
@@ -202,7 +201,7 @@ try {
                         <input type="reset" value="Wyczyść" class="btn btn-danger">
                         <input type="submit" value="Dodaj do bazy" class="btn btn-primary"><br>
                         <?php
-                            if ($success) echo "Dodanie studenta przebiegło pomyślnie.";
+                        if ($success) echo "Dodanie studenta przebiegło pomyślnie.";
                         ?>
                     </div>
                 </form>
@@ -223,14 +222,14 @@ try {
                     <label for="kierunki">Kierunki studiów</label><br>
 
                     <div>Aby przeprowadzić poprawny import należy go wykonać w kolejności:<br>
-                    Kierunki -> Studenci -> Zainteresowania -> Projekty</div>
+                        Kierunki -> Studenci -> Zainteresowania -> Projekty</div>
 
                     <div id="instruction" class="mt-4 mb-4"></div>
 
                     <input type="file" name="file" class="form-control mt-4" accept=".csv" required>
                     <input type="submit" class="btn btn-primary mt-4" value="Prześlij plik do importu">
                     <?php
-                        if ($importSucces) echo "<br>Import zakończony powodzeniem.";
+                    if ($importSucces) echo "<br>Import zakończony powodzeniem.";
                     ?>
                 </form>
             </div>

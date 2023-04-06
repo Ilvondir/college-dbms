@@ -13,12 +13,11 @@ try {
     $sql = "call searching(?, ?, ?, ?)";
 
     if (isset($_GET["phrase"]) && isset($_GET["type"])) {
-        if ($_GET["phrase"] == "" && ($_GET["minMean"]=="" && $_GET["maxMean"]=="")) {
+        if ($_GET["phrase"] == "" && ($_GET["minMean"] == "" && $_GET["maxMean"] == "")) {
             $phrase = "";
             $condition = "Nazwisko";
             $minMean = 2;
             $maxMean = 5;
-
         } else {
             $phrase = $_GET["phrase"];
             $condition = $_GET["type"];
@@ -30,7 +29,6 @@ try {
         $condition = "Nazwisko";
         $minMean = 2;
         $maxMean = 5;
-
     }
 
     $result = $connect->prepare($sql);
@@ -178,7 +176,7 @@ try {
                 </table>
 
                 <div class="w-100 text-right">
-                    <button onclick="window.location = 'php/filterExport.php?<?php if (isset($_SERVER["QUERY_STRING"])) echo $_SERVER['QUERY_STRING'] ?>'" class="mt-3 btn btn-primary" style="cursor: pointer">Eksportuj wyniki wyszukiwania</btn> 
+                    <button onclick="window.location = 'php/filterExport.php?<?php if (isset($_SERVER["QUERY_STRING"])) echo $_SERVER['QUERY_STRING'] ?>'" class="mt-3 btn btn-primary" style="cursor: pointer">Eksportuj wyniki wyszukiwania</btn>
                 </div>
             </div>
         </div>

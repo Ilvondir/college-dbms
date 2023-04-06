@@ -27,7 +27,7 @@ if (!isset($_GET["id"])) {
 
         $data = $result->fetch();
 
-        if ($_SERVER["REQUEST_METHOD"]=="POST") {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $id = $_GET["id"];
             $name = $_POST["name"];
             $surname = $_POST["surname"];
@@ -55,9 +55,8 @@ if (!isset($_GET["id"])) {
                 $hobby
             ]);
 
-            header("Location: student.php?id=".$_GET["id"]);
+            header("Location: student.php?id=" . $_GET["id"]);
         }
-
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -180,8 +179,8 @@ if (!isset($_GET["id"])) {
                     </div>
 
                     <div class="float-left text-right w-100">
-                    <button type="button" onclick="window.location = 'student.php?id=<?php echo $_GET["id"] ?>'" class="btn btn-danger">Anuluj</button>
-                    <input type="submit" value="Aktualizuj dane" class="btn btn-primary"><br>
+                        <button type="button" onclick="window.location = 'student.php?id=<?php echo $_GET["id"] ?>'" class="btn btn-danger">Anuluj</button>
+                        <input type="submit" value="Aktualizuj dane" class="btn btn-primary"><br>
                     </div>
                 </form>
             </div>

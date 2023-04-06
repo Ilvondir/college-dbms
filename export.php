@@ -16,9 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $tabs = ["studenci", "projekty", "zainteresowania", "kierunki"];
 
-        $archive = "export-". date("Ymd-His").".zip";
+        $archive = "export-" . date("Ymd-His") . ".zip";
         $zip = new ZipArchive();
-        if ($zip->open($archive, ZipArchive::CREATE)!=TRUE) {
+        if ($zip->open($archive, ZipArchive::CREATE) != TRUE) {
             exit("cannot open\n");
         }
 
@@ -26,9 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $result = $connect->prepare($sql);
             $result->execute([$tab]);
 
-            $filename = $tab.".csv";
+            $filename = $tab . ".csv";
             $file = fopen($filename, "w");
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 fputcsv($file, $row);
             }
@@ -39,13 +39,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $zip->close();
 
-        foreach ($tabs as $tab) unlink($tab.".csv");
+        foreach ($tabs as $tab) unlink($tab . ".csv");
 
-        header('Content-Disposition: archive; filename="'.$archive.'"');
+        header('Content-Disposition: archive; filename="' . $archive . '"');
         readfile($archive);
 
         unlink($archive);
-
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
