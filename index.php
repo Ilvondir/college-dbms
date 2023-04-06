@@ -92,8 +92,8 @@ session_start();
 
                 <h3>Lorem ipsum</h3>
                 <p>Donec ut auctor tortor. Phasellus id accumsan nunc. Aliquam quis varius risus, eu volutpat nunc. Nullam posuere accumsan lacus vitae pretium. Curabitur fermentum eu felis id mattis. Fusce feugiat eros non facilisis posuere. Proin euismod tortor velit. Nunc dapibus posuere turpis et tincidunt. Cras id ultrices lacus. Vivamus vulputate urna non ultricies eleifend. Sed pretium urna ipsum, non finibus ligula sollicitudin quis. In hac habitasse platea dictumst. Morbi in sodales ligula.</p>
+            </div>
         </div>
-    </div>
 
 </body>
 

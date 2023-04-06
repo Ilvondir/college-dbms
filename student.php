@@ -99,7 +99,7 @@ if (!isset($_GET["id"])) {
             <div class="containerToTable">
                 <?php $row = $result->fetch() ?>
 
-                <h1><?php echo $row["Imie"]. " ". $row["Nazwisko"] ?></h1>
+                <h1><?php echo $row["Imie"] . " " . $row["Nazwisko"] ?></h1>
 
                 <p>Numer albumu: <b><?php echo $row["NrAlbumu"] ?></b></p>
 
@@ -130,17 +130,18 @@ if (!isset($_GET["id"])) {
                                 <button class="btn btn-primary">Edytuj</button>
                             </a>
                         </div>
-                <?php } } ?>
-                
+                <?php }
+                } ?>
+
             </div>
         </div>
     </div>
-<script>
-    function authorization() {
-        let con = confirm("Czy na pewno chcesz usunąć tego studenta?");
-        if (con) window.location = "php/delete.php?id=<?php echo $_GET["id"] ?>";
-    }
-</script>
+    <script>
+        function authorization() {
+            let con = confirm("Czy na pewno chcesz usunąć tego studenta?");
+            if (con) window.location = "php/delete.php?id=<?php echo $_GET["id"] ?>";
+        }
+    </script>
 </body>
 
 </html>

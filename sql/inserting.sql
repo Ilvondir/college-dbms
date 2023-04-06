@@ -12,6 +12,13 @@ BEGIN
 
     DECLARE StudentID INTEGER;
     DECLARE IDkierunku INTEGER;
+    DECLARE counterKierunki INTEGER;
+
+    SET counterKierunki = (SELECT COUNT(*) FROM kierunki WHERE Nazwa=way);
+
+    IF counterKierunki=0 THEN
+        INSERT INTO kierunki VALUES (null, way);
+    END IF;
     
     SET StudentID = (SELECT MAX(IDStudenta) FROM studenci);
     SET StudentID = StudentID+1;

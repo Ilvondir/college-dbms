@@ -1,56 +1,23 @@
 <?php
 session_start();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$server = "localhost";
+$user = "root";
+$password = "";
+$database = "college";
 
-    $server = "localhost";
-    $user = "root";
-    $password = "";
-    $database = "college";
+try {
+    $connect = new PDO("mysql:host=$server;dbname=$database", $user, $password);
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    try {
-        $connect = new PDO("mysql:host=$server;dbname=$database", $user, $password);
-        $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = "call getKierunki()";
 
-        $sql = "call showToExport(?)";
-
-        $tabs = ["studenci", "projekty", "zainteresowania", "kierunki"];
-
-        $archive = "export-" . date("Ymd-His") . ".zip";
-        $zip = new ZipArchive();
-        if ($zip->open($archive, ZipArchive::CREATE) != TRUE) {
-            exit("cannot open\n");
-        }
-
-        foreach ($tabs as $tab) {
-            $result = $connect->prepare($sql);
-            $result->execute([$tab]);
-
-            $filename = $tab . ".csv";
-            $file = fopen($filename, "w");
-            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                fputcsv($file, $row);
-            }
-            fclose($file);
-
-            $zip->addFile($filename, $filename);
-        }
-
-        $zip->close();
-
-        foreach ($tabs as $tab) unlink($tab . ".csv");
-
-        header('Content-Disposition: archive; filename="' . $archive . '"');
-        readfile($archive);
-
-        unlink($archive);
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
-    }
+    $result = $connect->prepare($sql);
+    $result->execute();
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pl-PL">
@@ -87,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <h1><a href="index.php" class="logo">College DBMS</a></h1>
             <ul class="list-unstyled components mb-5">
-                <li>
+                <li class="active">
                     <a href="index.php"><span class="fa fa-home mr-3"></span> Strona główna</a>
                 </li>
                 <li>
@@ -100,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </li>';
                 }
                 ?>
-                <li class="active">
+                <li>
                     <a href="export.php"><span class="fa fa-book mr-3"></span> Eksport</a>
                 </li>
                 <li>
@@ -126,16 +93,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         <div id="content" class="pl-4 pr-4 pl-md-5 pr-md-5 pt-5">
-            <h2>Eksport bazy danych</h2>
+            <div class="containerToTable">
+                <h2>Lista kierunków studiów</h2>
+                <p>Jeśli szukanego kierunku studiów tu brakuje należy go najpierw zaimportować.</p>
 
-            <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam facilisis vulputate dui sed dapibus. Phasellus sed facilisis tellus. Curabitur ac libero consequat est sodales elementum. Nam accumsan erat eu sem ultricies ultrices. Vestibulum sed massa pharetra, maximus metus sit amet, rhoncus justo. Phasellus viverra lacinia felis. Morbi vel eros erat. Donec sed nisl vel turpis bibendum eleifend ac a velit. Aenean vitae massa libero. Aliquam quam massa, consectetur in faucibus eu, pharetra a est. Praesent volutpat accumsan sagittis. Pellentesque eu elementum urna, id malesuada lectus. Nam tempus diam non augue faucibus, et tempus magna pellentesque. Vestibulum nulla nunc, mattis id rhoncus quis, congue at ex. In non felis at nulla vulputate efficitur.</p>
+                <table class="table">
+                    <tr>
+                        <th>ID</th>
+                        <th>Kierunek</th>
+                    </tr>
+                    <?php while ($row = $result->fetch()) { ?>
+                        <tr>
+                            <td><?php echo $row["ID"] ?></td>
+                            <td><?php echo $row["Nazwa"] ?></td>
+                        </tr>
+                    <?php } ?>
+                </table>
 
-
-            <form method="POST" action="#">
-                <input type="submit" class="btn btn-primary mt-4" value="Pobierz eksport bazy">
-            </form>
-        </div>
-    </div>
+            </div>
 
 </body>
 

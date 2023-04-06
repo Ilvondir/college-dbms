@@ -56,8 +56,8 @@ try {
             if (move_uploaded_file($_FILES["file"]["tmp_name"], $newFileName)) {
 
                 if ($tab == "studenci") $sql = "call importStudenci(?, ?, ?, ?, ?)";
-                if ($tab == "projekty") $sql = "call importProjekty(?, ?, ?)";
-                if ($tab == "zainteresowania") $sql = "call importZainteresowania(?, ?)";
+                if ($tab == "projekty") $sql = "call importProjekty(?, ?)";
+                if ($tab == "zainteresowania") $sql = "call importZainteresowania(?)";
                 if ($tab == "kierunki") $sql = "call importKierunki(?)";
                 $result = $connect->prepare($sql);
 
@@ -65,17 +65,16 @@ try {
                 $file = fopen($newFileName, "r");
 
                 while ($row = fgetcsv($file)) {
-                    if ($tab == "studenci") $result->execute([$row[1], $row[2], $row[3], $row[4], $row[5]]);
-                    if ($tab == "projekty") $result->execute([$row[0], $row[1], $row[2]]);
-                    if ($tab == "zainteresowania") $result->execute([$row[0], $row[1]]);
-                    if ($tab == "kierunki") $result->execute([$row[1]]);
+                    if ($tab == "studenci") $result->execute([$row[0], $row[1], $row[2], $row[3], $row[4]]);
+                    if ($tab == "projekty") $result->execute([$row[0], $row[1]]);
+                    if ($tab == "zainteresowania") $result->execute([$row[0]]);
+                    if ($tab == "kierunki") $result->execute([$row[0]]);
                 }
 
                 $importSucces = true;
                 fclose($file);
                 unlink($newFileName);
-
-            } else exit;   
+            } else exit;
         }
     }
 } catch (PDOException $e) {
@@ -97,6 +96,7 @@ try {
     <script src="js/libs/jquery.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="js/navbar.js" defer></script>
+    <script src="js/importing.js" defer></script>
 
     <link rel="shortcut icon" href="img/icon.ico">
 
@@ -201,7 +201,7 @@ try {
                         <input type="reset" value="Wyczyść" class="btn btn-danger">
                         <input type="submit" value="Dodaj do bazy" class="btn btn-primary"><br>
                         <?php
-                            if ($success) echo "Dodanie studenta przebiegło pomyślnie.";
+                        if ($success) echo "Dodanie studenta przebiegło pomyślnie.";
                         ?>
                     </div>
                 </form>
@@ -209,22 +209,27 @@ try {
                 <h2 class="mt-5">Importowanie tabel</h2>
                 <form method="POST" action="#" enctype="multipart/form-data">
                     <h6 class="mt-4">Wybierz tabelę:</h6>
-                    <input type="radio" name="tab" id="studenci" value="studenci">
+                    <input type="radio" name="tab" id="studenci" value="studenci" onchange="description()">
                     <label for="studenci">Studenci</label><br>
 
-                    <input type="radio" name="tab" id="projekty" value="projekty">
+                    <input type="radio" name="tab" id="projekty" value="projekty" onchange="description()">
                     <label for="projekty">Projekty</label><br>
 
-                    <input type="radio" name="tab" id="zainteresowania" value="zainteresowania">
+                    <input type="radio" name="tab" id="zainteresowania" value="zainteresowania" onchange="description()">
                     <label for="zainteresowania">Zainteresowania</label><br>
 
-                    <input type="radio" name="tab" id="kierunki" value="kierunki">
+                    <input type="radio" name="tab" id="kierunki" value="kierunki" onchange="description()">
                     <label for="kierunki">Kierunki studiów</label><br>
+
+                    <div>Aby przeprowadzić poprawny import należy go wykonać w kolejności:<br>
+                        Kierunki -> Studenci -> Zainteresowania -> Projekty</div>
+
+                    <div id="instruction" class="mt-4 mb-4"></div>
 
                     <input type="file" name="file" class="form-control mt-4" accept=".csv" required>
                     <input type="submit" class="btn btn-primary mt-4" value="Prześlij plik do importu">
                     <?php
-                        if ($importSucces) echo "<br>Import zakończony powodzeniem.";
+                    if ($importSucces) echo "<br>Import zakończony powodzeniem.";
                     ?>
                 </form>
             </div>
