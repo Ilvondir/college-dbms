@@ -33,6 +33,9 @@ try {
 
     $result = $connect->prepare($sql);
     $result->execute([$condition, $phrase, $minMean, $maxMean]);
+
+    $counter = $result->rowCount();
+
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
@@ -152,7 +155,10 @@ try {
                 </div>
 
 
-                <table class="table mt-5 table-striped">
+                <p class="mt-5 mb-1">
+                    Odnaleziono <b><?php echo $counter ?></b> pasujących rekordów.
+                </p>
+                <table class="table mt-0 table-striped">
                     <tr>
                         <th>ID</th>
                         <th>Nazwisko</th>
@@ -176,7 +182,9 @@ try {
                 </table>
 
                 <div class="w-100 text-right">
-                    <button onclick="window.location = 'php/filterExport.php?<?php if (isset($_SERVER["QUERY_STRING"])) echo $_SERVER['QUERY_STRING'] ?>'" class="mt-3 btn btn-primary" style="cursor: pointer">Eksportuj wyniki wyszukiwania</btn>
+                    <?php if ($counter>0) { ?>
+                        <button onclick="window.location = 'php/filterExport.php?<?php if (isset($_SERVER["QUERY_STRING"])) echo $_SERVER['QUERY_STRING'] ?>'" class="mt-3 btn btn-primary" style="cursor: pointer">Eksportuj wyniki wyszukiwania</btn>
+                    <?php } ?>
                 </div>
             </div>
         </div>

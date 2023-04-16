@@ -31,7 +31,7 @@ $sql = "call searching(?, ?, ?, ?);";
 $result = $connect->prepare($sql);
 $result->execute([$condition, $phrase, $minMean, $maxMean]);
 
-$filename = "filterExport.csv";
+$filename = "ExportWith". $result->rowCount(). "Students.csv";
 
 $file = fopen($filename, "w");
 
