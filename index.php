@@ -79,7 +79,7 @@ session_start();
             <div class="containerToTable">
                 <?php
                 if (isset($_SESSION["logged"])) {
-                    if ($_SESSION["logged"]) echo "<h1 class='h1 mb-5'>Witaj, Administratorze!</h1>";
+                    if ($_SESSION["logged"]) echo "<h1 class='h1 mb-5'>Witaj, ". $_SESSION["login"]. "!</h1>";
                 }
                 ?>
                 <h3>Lorem ipsum</h3>

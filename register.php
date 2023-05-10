@@ -82,7 +82,6 @@ if (isset($_SESSION["logged"])) {
 
         <div id="content" class="pl-4 pr-4 pl-md-5 pr-md-5 pt-5 d-flex justify-content-center align-items-center">
             <form class="form" action="#" method="POST">
-                <h1 class="mb-4">Logowanie</h1>
                 <label class="label" for="login">Podaj login:</label><br>
                 <input type="text" id="login" name="login" class="form-control" required><br>
                 <label class="label" for="password">Podaj hasło:</label><br>
