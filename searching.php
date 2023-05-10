@@ -147,6 +147,7 @@ try {
                                 <input type="number" class="form-control" min="2" max="5" value="5" step="0.01" name="maxMean">
                             </div>
                         </div>
+                        <input type="number" value="1" name="page" style="display: none">
 
                         <div class="text-center">
                             <input type="submit" class="btn btn-primary mt-3" value="Szukaj">
@@ -155,10 +156,15 @@ try {
                 </div>
 
 
-                <p class="mt-5 mb-1">
+                <p class="mt-5 mb-0">
                     Odnaleziono <b><?php echo $counter ?></b> pasujących rekordów.
                 </p>
-                <table class="table mt-0 table-striped">
+                <div class="w-100 mt-0 text-right">
+                    <?php if ($counter>0) { ?>
+                        <button onclick="window.location = 'php/filterExport.php?<?php if (isset($_SERVER["QUERY_STRING"])) echo $_SERVER['QUERY_STRING'] ?>'" class="mt-3 btn btn-primary" style="cursor: pointer">Eksportuj wyniki wyszukiwania</btn>
+                    <?php } ?>
+                </div>
+                <table class="table mt-4 table-striped">
                     <tr>
                         <th>ID</th>
                         <th>Nazwisko</th>
@@ -168,23 +174,50 @@ try {
                         <th>Praca magisterska</th>
                         <th>Średnia ocen</th>
                     </tr>
-                    <?php while ($rows = $result->fetch()) { ?>
-                        <tr onclick="window.location = 'student.php?id=<?php echo $rows["IDStudenta"] ?>'">
-                            <td><?php echo $rows["IDStudenta"] ?></td>
-                            <td><?php echo $rows["Nazwisko"] ?></td>
-                            <td><?php echo $rows["Imie"] ?></td>
-                            <td><?php echo $rows["NrAlbumu"] ?></td>
-                            <td><?php echo $rows["Kierunek"] ?></td>
-                            <td><?php echo $rows["NazwaProjektu"] ?></td>
-                            <td><?php echo $rows["SredniaOcen"] ?></td>
-                        </tr>
+                    <?php 
+                        $rows = $result->fetchAll();
+                        $start = 0;
+                        $stop = 25;
+                        $recordsOnPage = 25;
+                        if (isset($_GET["page"])) {
+                            $page = $_GET["page"];
+                            $start = $recordsOnPage*($page - 1);
+                            $stop = $recordsOnPage*$page;
+                        }
+                        for ($i = $start; $i<$stop; $i++) { 
+                            if ($i >= count($rows)) break;
+                        ?>
+                            <tr onclick="window.location = 'student.php?id=<?php echo $rows[$i]["IDStudenta"] ?>'">
+                                <td><?php echo $rows[$i]["IDStudenta"] ?></td>
+                                <td><?php echo $rows[$i]["Nazwisko"] ?></td>
+                                <td><?php echo $rows[$i]["Imie"] ?></td>
+                                <td><?php echo $rows[$i]["NrAlbumu"] ?></td>
+                                <td><?php echo $rows[$i]["Kierunek"] ?></td>
+                                <td><?php echo $rows[$i]["NazwaProjektu"] ?></td>
+                                <td><?php echo $rows[$i]["SredniaOcen"] ?></td>
+                            </tr>
                     <?php } ?>
                 </table>
+                <div class="w-100 text-center">
+                    <?php 
+                    if (isset($_GET["page"])) {
+                        $page = $_GET["page"];
 
-                <div class="w-100 text-right">
-                    <?php if ($counter>0) { ?>
-                        <button onclick="window.location = 'php/filterExport.php?<?php if (isset($_SERVER["QUERY_STRING"])) echo $_SERVER['QUERY_STRING'] ?>'" class="mt-3 btn btn-primary" style="cursor: pointer">Eksportuj wyniki wyszukiwania</btn>
-                    <?php } ?>
+                        if ($page>1) {
+                            echo "<a href='searching.php?type=". $_GET["type"]. "&phrase=". $_GET["phrase"]. "&minMean=". $_GET["minMean"]. "&maxMean=". $_GET["maxMean"]. "&page=". ($_GET["page"]-1). "'><button class='btn btn-primary mr-4'>< Poprzednia</button></a>";
+                        }
+                        $maxPage = ceil(count($rows)/$recordsOnPage);
+
+                        if ($page<$maxPage) {
+                            echo "<a href='searching.php?type=". $_GET["type"]. "&phrase=". $_GET["phrase"]. "&minMean=". $_GET["minMean"]. "&maxMean=". $_GET["maxMean"]. "&page=". ($_GET["page"]+1). "'><button class='btn btn-primary'>Następna ></button></a>";
+                        }
+                    } else {
+                        echo "<a href='searching.php?type=Nazwisko&phrase=&minMean=2&maxMean=5&page=2'><button class='btn btn-primary'>Następna ></button></a>";
+
+                    }
+                    
+                    
+                    ?>
                 </div>
             </div>
         </div>
