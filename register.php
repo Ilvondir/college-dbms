@@ -82,12 +82,13 @@ if (isset($_SESSION["logged"])) {
 
         <div id="content" class="pl-4 pr-4 pl-md-5 pr-md-5 pt-5 d-flex justify-content-center align-items-center">
             <form class="form" action="#" method="POST">
+                <h1 class="mb-4">Rejestracja</h1>
                 <label class="label" for="login">Podaj login:</label><br>
                 <input type="text" id="login" name="login" class="form-control" required><br>
                 <label class="label" for="password">Podaj hasło:</label><br>
                 <input type="password" id="password" name="password" class="form-control" required><br>
                 <div class="text-center">
-                    <input type="submit" value="Zaloguj się" class="btn btn-primary">
+                    <input type="submit" value="Zarejestruj" class="btn btn-primary">
 
                     <?php
 
@@ -103,26 +104,17 @@ if (isset($_SESSION["logged"])) {
                         $login = $_POST["login"];
                         $password = $_POST["password"];
 
-                        $sql = "call getUzytkownicy()";
+                        $sql = "call registering(?, ?)";
 
                         $result = $connect->prepare($sql);
-                        $result->execute();
+                        $result->execute([$login, $password]);
 
-                        while ($user = $result->fetch()) {
-                            if ($login == $user["login"] && hash("sha256", $password) == $user["password"]) {
-                                $_SESSION["logged"] = true;
-                                $_SESSION["login"] = $user["login"];
-                                echo "<br>Zalogowano pomyślnie.";
-                                header("Location: index.php");
-                            } else {
-                                echo "<br>Próba zalogowania nie powiodła się.";
-                            }
-                        }
+                        echo "<br><br>Rejestracja przebiegła pomyślnie.";
                     }
 
                     ?>
                 </div>
-                <p class="mt-4">Nie masz konta? <a href="register.php">Zarejestruj się...</a></p>
+                <p class="mt-4">Masz już konto? <a href="login.php">Zaloguj się...</a></p>
             </form>
         </div>
     </div>

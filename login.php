@@ -116,7 +116,7 @@ if (isset($_SESSION["logged"])) {
                                 echo "<br>Zalogowano pomyślnie.";
                                 header("Location: index.php");
                             } else {
-                                echo "<br>Próba zalogowania nie powiodła się.";
+                                echo "<br><br>Próba zalogowania nie powiodła się.";
                             }
                         }
                     }
