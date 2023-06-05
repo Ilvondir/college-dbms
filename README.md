@@ -15,13 +15,14 @@ College-DBMS is a PHP-based web application that facilitates registration, login
 For running the application you need:
 
 - [XAMPP](https://www.apachefriends.org/pl/index.html)
+- [composer](https://getcomposer.org)
 
 ## How to run
 
 1. Execute command `git clone https://github.com/Ilvondir/portfolio`.
 2. Import database from `sql/database.sql`.
 3. Open XAMPP and start Apache and SQL server.
-4. In terminal type `php -S localhost:8000` on this project.
+4. In terminal type `composer install` and `php -S localhost:8000` on this project.
 5. Go to web browser and type `localhost:8000` at URL address field.
 6. Register and login in to your account to discover various functionalities.
 
