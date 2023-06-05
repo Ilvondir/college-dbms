@@ -8,6 +8,7 @@ College-DBMS is a PHP-based web application that facilitates registration, login
 - JavaScript ES6
 - JQuery 3.6.0
 - PHP 8.1.5
+- Bootstrap 4.7.0
 
 ## Requirements
 
@@ -23,8 +24,6 @@ For running the application you need:
 4. In terminal type `php -S localhost:8000` on this project.
 5. Go to web browser and type `localhost:8000` at URL address field.
 6. Register and login in to your account to discover various functionalities.
-
-![useCaseDiagram](img/useCaseDiagram.png?raw=true)
 
 ## First Look
 
