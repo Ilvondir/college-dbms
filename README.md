@@ -1,6 +1,8 @@
 # College Database Management System
 
-College-DBMS is a PHP-based web application that facilitates registration, login, and CRUD operations for student management, all performed on a PL/SQL-powered database. The application provides a user-friendly interface for seamless navigation and efficient data handling.
+College-DBMS is a PHP-based web application that facilitates registration, login, and CRUD operations for student management, all performed on a PL/SQL-powered database. The application provides a user-friendly interface for seamless navigation and efficient data handling. All database operations were to be performed on procedures that could be found in the [sql folder](https://github.com/Ilvondir/college-dbms/tree/master/sql).
+
+The project was created to fulfill the requirements of the university course Databases in the Computer Science degree. The project received a grade of 5.0 on a scale from 2 to 5.
 
 ## Used Tools
 - HTML 5
@@ -19,7 +21,7 @@ For running the application you need:
 
 ## How to run
 
-1. Execute command `git clone https://github.com/Ilvondir/portfolio`.
+1. Execute command `git clone https://github.com/Ilvondir/college-dbms`.
 2. Import database from `sql/database.sql`.
 3. Open XAMPP and start Apache and SQL server.
 4. In terminal type `composer install` and `php -S localhost:8000` on this project.
